@@ -1,4 +1,6 @@
+import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
+
 class LoginScreenButton extends StatelessWidget {
   final String textLabel;
   final Function()? onPressed;
@@ -12,13 +14,16 @@ class LoginScreenButton extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.yellow,
+          color: kBluecolor,
           borderRadius: BorderRadius.circular(10),
         ),
-        child:Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: 12),
-          child: Center(child: Text(textLabel)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Center(
+              child: Text(
+            textLabel,
+            style: TextStyle(color: Colors.white),
+          )),
         ),
       ),
     );

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 class InputFieldBox extends StatelessWidget {
   InputFieldBox({
     Key? key,
     required this.userIdController,
     required this.inputTypeText,
     required this.keyboardType,
-    this.isPass=false,
+    this.isPass = false,
   }) : super(key: key);
 
   final TextEditingController userIdController;
@@ -17,9 +18,10 @@ class InputFieldBox extends StatelessWidget {
     return TextFormField(
       controller: userIdController,
       keyboardType: keyboardType,
-      decoration:InputDecoration(
+      decoration: InputDecoration(
         hintText: inputTypeText,
-        hintStyle: TextStyle(color: Colors.red),
+        suffixStyle: TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: Colors.white),
       ),
     );
   }

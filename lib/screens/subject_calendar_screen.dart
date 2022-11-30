@@ -1,3 +1,4 @@
+import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -11,13 +12,11 @@ class SubjectCalendarScreen extends StatefulWidget {
 }
 
 class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
-
-
-  void initState(){
+  void initState() {
     super.initState();
   }
 
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -35,7 +34,11 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
         textScaleFactor: 1.0,
       ),
       child: Scaffold(
-        appBar: AppBar(title: Text("data"),elevation: 0,),
+        appBar: AppBar(
+          title: Text("data"),
+          backgroundColor: kOrangecolor,
+          elevation: 0,
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -43,7 +46,7 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                 height: MediaQuery.of(context).size.height / 4,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [Color(0xff7BABED), Color(0xFF649DED)],
+                        colors: [kOrangecolor, kBluecolor],
                         begin: Alignment.bottomLeft,
                         end: Alignment.bottomRight),
                     borderRadius: BorderRadius.only(
@@ -63,14 +66,14 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                               totalSteps: 10,
                               currentStep: 7,
                               stepSize: 5,
-                              selectedColor:Colors.green,
+                              selectedColor: Colors.green,
                               // attendedPercentage > requiredAttendance / 10
                               //     ? Colors.lightGreenAccent.shade200
                               //     : Colors.redAccent.shade200,
                               unselectedColor: Colors.grey[200],
                               padding: 0,
-                              width: MediaQuery.of(context).size.height*0.16,
-                              height: MediaQuery.of(context).size.height*0.16,
+                              width: MediaQuery.of(context).size.height * 0.16,
+                              height: MediaQuery.of(context).size.height * 0.16,
                               selectedStepSize: 9,
                               roundedCap: (_, __) => true,
                               child: Center(
@@ -113,16 +116,14 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                         ),
                       ),
                     ),
-
                   ],
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
               child: Calendar("abcd"
                   //subject.id,
-              ),
+                  ),
             ),
-
           ],
         ),
       ),
