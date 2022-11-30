@@ -1,4 +1,5 @@
 import 'package:attendance_manager/screens/login_screen.dart';
+import 'package:attendance_manager/screens/subject_calendar_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: SubjectCalendarScreen(),
     );
   }
 }
