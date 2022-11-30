@@ -1,3 +1,4 @@
+import 'package:attendance_manager/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,10 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text("Inital Setup Done"),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
     );
   }
 }
