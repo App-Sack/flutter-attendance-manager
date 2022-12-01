@@ -1,3 +1,4 @@
+import 'package:attendance_manager/screens/all_subjects_screen.dart';
 import 'package:attendance_manager/widgets/login_screen_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -70,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 LoginScreenButton(
                                   textLabel: "Login",
                                   onPressed: () {
+                                    Navigator.pushReplacementNamed(context, AllSubjectsScreen.routeName);
                                     //TODO:Login functionality
                                   },
                                 ),

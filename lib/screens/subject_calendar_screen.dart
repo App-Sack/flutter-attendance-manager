@@ -12,7 +12,6 @@ class SubjectCalendarScreen extends StatefulWidget {
 
 class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
 
-
   void initState(){
     super.initState();
   }
@@ -30,6 +29,16 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
     // double attendedPercentage = (subject.present + subject.absent == 0)
     //     ? 0
     //     : ((subject.present / (subject.present + subject.absent)) * 10);
+    final subjectData=ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
+    int present=subjectData['totalPresent'];
+    int absent=subjectData['totalClasses']-subjectData['totalPresent'];
+    int totalClasses=subjectData['totalClasses'];
+    double attendedPercentage = (present + absent == 0)
+        ? 0
+        : ((present / (present +absent)) * 10);
+    //TODO:Fetch required percentage from the server
+    print(attendedPercentage);
+    final requiredAttendance=75;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         textScaleFactor: 1.0,
@@ -61,12 +70,11 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                           children: [
                             CircularStepProgressIndicator(
                               totalSteps: 10,
-                              currentStep: 7,
+                              currentStep: attendedPercentage.toInt(),
                               stepSize: 5,
-                              selectedColor:Colors.green,
-                              // attendedPercentage > requiredAttendance / 10
-                              //     ? Colors.lightGreenAccent.shade200
-                              //     : Colors.redAccent.shade200,
+                              selectedColor:attendedPercentage > requiredAttendance / 10
+                                  ? Colors.lightGreenAccent.shade200
+                                  : Colors.redAccent.shade200,
                               unselectedColor: Colors.grey[200],
                               padding: 0,
                               width: MediaQuery.of(context).size.height*0.16,
@@ -75,8 +83,7 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                               roundedCap: (_, __) => true,
                               child: Center(
                                 child: Text(
-                                  //"${(attendedPercentage * 10).toStringAsFixed(0)}%",
-                                  "80",
+                                  "${(attendedPercentage * 10).toStringAsFixed(0)}%",
                                   style: TextStyle(
                                       fontSize: 30, color: Colors.black38),
                                 ),
@@ -90,20 +97,17 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  //"Present: ${subject.present}",
-                                  "Present:12",
+                                  "Present: ${present}",
                                   style: TextStyle(
                                       fontSize: 26, color: Colors.black45),
                                 ),
                                 Text(
-                                  //"Absent: ${subject.absent}",
-                                  "Absent:4",
+                                  "Absent: ${absent}",
                                   style: TextStyle(
                                       fontSize: 25, color: Colors.black45),
                                 ),
                                 Text(
-                                  //"Total: ${subject.absent + subject.present}",
-                                  "Total:16",
+                                  "Total: ${totalClasses}",
                                   style: TextStyle(
                                       fontSize: 25, color: Colors.black45),
                                 ),
@@ -118,9 +122,7 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-              child: Calendar("abcd"
-                  //subject.id,
-              ),
+              child: Calendar(subjectData['courseCode']),
             ),
 
           ],

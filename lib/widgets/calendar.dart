@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:http/http.dart' as http;
 class Calendar extends StatefulWidget {
   final String subId;
   Calendar(this.subId);
@@ -10,10 +13,37 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+
+  List AttendanceRecords = [];
+
+  void getAttendanceData() async {
+    var url = Uri.parse(
+        "https://shivam13.pythonanywhere.com/api/student/get-calendar-attendance/01jst20cs036/${widget.subId}/");
+    var data = await http.get(url);
+    print(data.body);
+    final extractedData = json.decode(data.body) as List<dynamic>;
+    print(extractedData);
+    print(extractedData[0]['date'].toString());
+    setState(() {
+      AttendanceRecords = extractedData;
+    });
+  }
+
+
   List _getEvents(BuildContext context, DateTime day) {
     List events = [];
     //final subject = Provider.of<Subjects>(context).findById(widget.subId);
     final String thisDay = DateFormat('dd-MM-yyyy').format(day);
+
+    AttendanceRecords.forEach((record) {
+      DateTime recordDate=DateTime.parse(record["date"]);
+      if (DateFormat('dd-MM-yyyy').format(recordDate)==thisDay && record["isPresent"]){
+        events.add('p');
+      }
+      if(DateFormat('dd-MM-yyyy').format(recordDate)==thisDay && !record["isPresent"]){
+        events.add('a');
+      }
+    });
 
     // subject.presentEvents.where((e) => e == thisDay).forEach((e) {
     //   events.add('p');
@@ -27,7 +57,11 @@ class _CalendarState extends State<Calendar> {
 
     return events;
   }
-
+@override
+  void initState() {
+    getAttendanceData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +99,7 @@ class _CalendarState extends State<Calendar> {
           children: events.map((event) {
             String e = event.toString();
             Color cor;
-            if (e == "p")
+            if (e == 'p')
               cor = Colors.lightGreenAccent;
             else if (e == 'a')
               cor = Colors.red;
