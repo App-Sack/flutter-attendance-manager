@@ -1,4 +1,5 @@
 import 'package:attendance_manager/screens/all_subjects_screen.dart';
+import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/login_screen_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -17,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var selected = selectedUser.Student;
-  TextEditingController userIdController=TextEditingController();
-  TextEditingController passwordController=TextEditingController();
+  TextEditingController userIdController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +44,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ClipPath(
                   clipper: WaveClipperTwo(reverse: true),
                   child: Container(
-                    decoration: BoxDecoration(color: Colors.orange, boxShadow: [
-                      BoxShadow(
-                          color: Colors.red, blurRadius: 5, spreadRadius: 5),
-                    ]),
+                    decoration: BoxDecoration(
+                      color: kOrangeColor.withOpacity(0.9),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //       color: Colors.red,
+                      //       blurRadius: 5,
+                      //       spreadRadius: 5),
+                      // ]),
+                    ),
                     height:
                         (MediaQuery.of(context).size.height - statusBarheight) *
                             0.75,
@@ -59,10 +65,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          selected==selectedUser.Student?
-                          UserInputFormContainer(inputText: 'USN',passwordText: "DD/MM/YYYY", userIdController: userIdController,passwordController: passwordController,inputKeyboardType: TextInputType.text,passwordKeyboardType: TextInputType.datetime,):
-                          UserInputFormContainer(inputText: "inputText", passwordText: "passwordText", inputKeyboardType: TextInputType.text, passwordKeyboardType: TextInputType.number, userIdController: userIdController, passwordController: passwordController),
-
+                          selected == selectedUser.Student
+                              ? UserInputFormContainer(
+                                  inputText: 'USN',
+                                  passwordText: "DD/MM/YYYY",
+                                  userIdController: userIdController,
+                                  passwordController: passwordController,
+                                  inputKeyboardType: TextInputType.text,
+                                  passwordKeyboardType: TextInputType.datetime,
+                                )
+                              : UserInputFormContainer(
+                                  inputText: "inputText",
+                                  passwordText: "passwordText",
+                                  inputKeyboardType: TextInputType.text,
+                                  passwordKeyboardType: TextInputType.number,
+                                  userIdController: userIdController,
+                                  passwordController: passwordController),
                           Container(
                             height: MediaQuery.of(context).size.height * 0.2,
                             child: Column(
@@ -71,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 LoginScreenButton(
                                   textLabel: "Login",
                                   onPressed: () {
-                                    Navigator.pushReplacementNamed(context, AllSubjectsScreen.routeName);
+                                    Navigator.pushReplacementNamed(
+                                        context, AllSubjectsScreen.routeName);
                                     //TODO:Login functionality
                                   },
                                 ),
@@ -112,5 +131,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-

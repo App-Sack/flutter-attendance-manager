@@ -1,3 +1,4 @@
+import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -11,12 +12,11 @@ class SubjectCalendarScreen extends StatefulWidget {
 }
 
 class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
-
-  void initState(){
+  void initState() {
     super.initState();
   }
 
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -29,32 +29,34 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
     // double attendedPercentage = (subject.present + subject.absent == 0)
     //     ? 0
     //     : ((subject.present / (subject.present + subject.absent)) * 10);
-    final subjectData=ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
-    int present=subjectData['totalPresent'];
-    int absent=subjectData['totalClasses']-subjectData['totalPresent'];
-    int totalClasses=subjectData['totalClasses'];
-    double attendedPercentage = (present + absent == 0)
-        ? 0
-        : ((present / (present +absent)) * 10);
+    final subjectData =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    int present = subjectData['totalPresent'];
+    int absent = subjectData['totalClasses'] - subjectData['totalPresent'];
+    int totalClasses = subjectData['totalClasses'];
+    double attendedPercentage =
+        (present + absent == 0) ? 0 : ((present / (present + absent)) * 10);
     //TODO:Fetch required percentage from the server
     print(attendedPercentage);
-    final requiredAttendance=75;
+    final requiredAttendance = 75;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         textScaleFactor: 1.0,
       ),
       child: Scaffold(
-        appBar: AppBar(title: Text("data"),elevation: 0,),
+        backgroundColor: kBlueLightColor,
+        appBar: AppBar(
+          backgroundColor: kOrangeDarkColor,
+          title: Text("data"),
+          elevation: 0,
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
                 height: MediaQuery.of(context).size.height / 4,
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Color(0xff7BABED), Color(0xFF649DED)],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.bottomRight),
+                    color: kOrangeColor,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(25),
                         bottomRight: Radius.circular(25))),
@@ -72,20 +74,21 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                               totalSteps: 10,
                               currentStep: attendedPercentage.toInt(),
                               stepSize: 5,
-                              selectedColor:attendedPercentage > requiredAttendance / 10
-                                  ? Colors.lightGreenAccent.shade200
-                                  : Colors.redAccent.shade200,
-                              unselectedColor: Colors.grey[200],
+                              selectedColor:
+                                  attendedPercentage > requiredAttendance / 10
+                                      ? Colors.lightGreen
+                                      : Colors.red,
+                              unselectedColor: Colors.white,
                               padding: 0,
-                              width: MediaQuery.of(context).size.height*0.16,
-                              height: MediaQuery.of(context).size.height*0.16,
+                              width: MediaQuery.of(context).size.height * 0.16,
+                              height: MediaQuery.of(context).size.height * 0.16,
                               selectedStepSize: 9,
                               roundedCap: (_, __) => true,
                               child: Center(
                                 child: Text(
                                   "${(attendedPercentage * 10).toStringAsFixed(0)}%",
                                   style: TextStyle(
-                                      fontSize: 30, color: Colors.black38),
+                                      fontSize: 30, color: Colors.white),
                                 ),
                               ),
                             ),
@@ -99,17 +102,17 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                                 Text(
                                   "Present: ${present}",
                                   style: TextStyle(
-                                      fontSize: 26, color: Colors.black45),
+                                      fontSize: 26, color: Colors.white),
                                 ),
                                 Text(
                                   "Absent: ${absent}",
                                   style: TextStyle(
-                                      fontSize: 25, color: Colors.black45),
+                                      fontSize: 25, color: Colors.white),
                                 ),
                                 Text(
                                   "Total: ${totalClasses}",
                                   style: TextStyle(
-                                      fontSize: 25, color: Colors.black45),
+                                      fontSize: 25, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -117,14 +120,12 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                         ),
                       ),
                     ),
-
                   ],
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
               child: Calendar(subjectData['courseCode']),
             ),
-
           ],
         ),
       ),
