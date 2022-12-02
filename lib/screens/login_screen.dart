@@ -1,9 +1,10 @@
+import 'package:attendance_manager/resources/auth_methods.dart';
 import 'package:attendance_manager/screens/all_subjects_screen.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/login_screen_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/user_input_form_container.dart';
 
 enum selectedUser {
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var selected = selectedUser.Student;
   TextEditingController userIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           selected == selectedUser.Student
                               ? UserInputFormContainer(
                                   inputText: 'USN',
-                                  passwordText: "DD/MM/YYYY",
+                                  passwordText: "DDMMYYYY",
                                   userIdController: userIdController,
                                   passwordController: passwordController,
                                   inputKeyboardType: TextInputType.text,
@@ -88,10 +90,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 LoginScreenButton(
                                   textLabel: "Login",
-                                  onPressed: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, AllSubjectsScreen.routeName);
-                                    //TODO:Login functionality
+                                  onPressed: () async {
+                                    if(userIdController.text.isNotEmpty && passwordController.text.isNotEmpty){
+                                      String response=await AuthMethods().studentLogin(userIdController.text, passwordController.text);
+                                      if(response=="success"){
+                                        SharedPreferences sp=await SharedPreferences.getInstance();
+                                        sp.setString('usn', '${userIdController.text}');
+                                        print(sp.getString('usn'));
+                                        Navigator.of(context).pushReplacementNamed(AllSubjectsScreen.routeName);
+
+                                      }
+                                      else{
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response)));
+                                      }
+
+                                    }
                                   },
                                 ),
                                 const Divider(

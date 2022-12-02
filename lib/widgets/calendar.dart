@@ -4,6 +4,7 @@ import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget {
@@ -18,8 +19,9 @@ class _CalendarState extends State<Calendar> {
   List AttendanceRecords = [];
 
   void getAttendanceData() async {
+    SharedPreferences sp=await SharedPreferences.getInstance();
     var url = Uri.parse(
-        "https://shivam13.pythonanywhere.com/api/student/get-calendar-attendance/01jst20cs036/${widget.subId}/");
+        "https://sjce12345.pythonanywhere.com/api/student/get-calendar-attendance/${sp.getString('usn')}/${widget.subId}/");
     var data = await http.get(url);
     print(data.body);
     final extractedData = json.decode(data.body) as List<dynamic>;

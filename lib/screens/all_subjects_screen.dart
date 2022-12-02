@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:attendance_manager/widgets/subject_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AllSubjectsScreen extends StatefulWidget {
   static const routeName = '/all-subjects-screen';
@@ -14,8 +15,10 @@ class AllSubjectsScreen extends StatefulWidget {
 class _AllSubjectsScreenState extends State<AllSubjectsScreen> {
   List _subjects = [];
   void getSubjects() async {
+    SharedPreferences sp=await SharedPreferences.getInstance();
     var url = Uri.parse(
-        "https://shivam13.pythonanywhere.com/api/student/get-student-attendance/01jst20cs036");
+        "https://sjce12345.pythonanywhere.com/api/student/get-student-attendance/${sp.getString('usn')}"
+            );
     var data = await http.get(url);
     final extractedData = json.decode(data.body) as List<dynamic>;
     setState(() {
