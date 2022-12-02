@@ -2,7 +2,7 @@ import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import '../widgets/calendar.dart';
+import '../../widgets/calendar.dart';
 
 class SubjectCalendarScreen extends StatefulWidget {
   static const routeName = '/subject-calendar-screen';

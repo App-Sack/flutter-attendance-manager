@@ -23,10 +23,7 @@ class _CalendarState extends State<Calendar> {
     var url = Uri.parse(
         "https://sjce12345.pythonanywhere.com/api/student/get-calendar-attendance/${sp.getString('usn')}/${widget.subId}/");
     var data = await http.get(url);
-    print(data.body);
     final extractedData = json.decode(data.body) as List<dynamic>;
-    print(extractedData);
-    print(extractedData[0]['date'].toString());
     setState(() {
       AttendanceRecords = extractedData;
     });
@@ -35,7 +32,7 @@ class _CalendarState extends State<Calendar> {
   List _getEvents(BuildContext context, DateTime day) {
     List events = [];
     //final subject = Provider.of<Subjects>(context).findById(widget.subId);
-    final String thisDay = DateFormat('dd-MM-yyyy').format(day);
+    final String thisDay=DateFormat('dd-MM-yyyy').format(day);
 
     AttendanceRecords.forEach((record) {
       DateTime recordDate = DateTime.parse(record["date"]);
@@ -76,12 +73,12 @@ class _CalendarState extends State<Calendar> {
         2022,
       ),
       lastDay: DateTime.utc(2124),
-      daysOfWeekStyle: DaysOfWeekStyle(
+      daysOfWeekStyle: const DaysOfWeekStyle(
           weekdayStyle: TextStyle(fontWeight: FontWeight.w800),
           weekendStyle:
               TextStyle(color: Colors.red, fontWeight: FontWeight.w600)),
-      weekendDays: [DateTime.sunday],
-      headerStyle: HeaderStyle(
+      weekendDays: const [DateTime.sunday],
+      headerStyle:const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
       ),

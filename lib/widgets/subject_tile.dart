@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../screens/subject_calendar_screen.dart';
+import '../screens/student_screens/subject_calendar_screen.dart';
 
 class SubjectTile extends StatelessWidget {
   final Map<String,dynamic> subjectData;

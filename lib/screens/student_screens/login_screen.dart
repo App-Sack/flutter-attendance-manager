@@ -1,11 +1,11 @@
 import 'package:attendance_manager/resources/auth_methods.dart';
-import 'package:attendance_manager/screens/all_subjects_screen.dart';
+import 'package:attendance_manager/screens/student_screens/all_subjects_screen.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/login_screen_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../widgets/user_input_form_container.dart';
+import '../../widgets/user_input_form_container.dart';
 
 enum selectedUser {
   Student,
