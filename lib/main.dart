@@ -1,3 +1,4 @@
+import 'package:attendance_manager/screens/all_subjects_screen.dart';
 import 'package:attendance_manager/screens/login_screen.dart';
 import 'package:attendance_manager/screens/subject_calendar_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SubjectCalendarScreen(),
+      home: LoginScreen(),
+      routes: {
+        SubjectCalendarScreen.routeName: (ctx) => SubjectCalendarScreen(),
+        AllSubjectsScreen.routeName: (ctx) => AllSubjectsScreen(),
+      },
     );
   }
 }
