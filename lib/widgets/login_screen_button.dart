@@ -25,7 +25,7 @@ class _LoginScreenButtonState extends State<LoginScreenButton> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Center(
-              child: widget.loading?CircularProgressIndicator():Text(
+              child: widget.loading?CircularProgressIndicator(color: kOrangeColor,):Text(
             widget.textLabel,
             style: TextStyle(color: Colors.white),
           )),
