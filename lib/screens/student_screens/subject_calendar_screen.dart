@@ -47,7 +47,7 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
         backgroundColor: kBlueLightColor,
         appBar: AppBar(
           backgroundColor: kOrangeDarkColor,
-          title: Text("data"),
+          title: Text(subjectData['courseName']),
           elevation: 0,
         ),
         body: Column(

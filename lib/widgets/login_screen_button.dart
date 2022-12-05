@@ -1,16 +1,21 @@
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreenButton extends StatelessWidget {
+class LoginScreenButton extends StatefulWidget {
   final String textLabel;
   final Function()? onPressed;
+  bool loading;
+  LoginScreenButton({super.key, required this.textLabel, this.onPressed,this.loading=false});
 
-  LoginScreenButton({super.key, required this.textLabel, this.onPressed});
+  @override
+  State<LoginScreenButton> createState() => _LoginScreenButtonState();
+}
 
+class _LoginScreenButtonState extends State<LoginScreenButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
+      onTap: widget.onPressed,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -20,8 +25,8 @@ class LoginScreenButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Center(
-              child: Text(
-            textLabel,
+              child: widget.loading?CircularProgressIndicator():Text(
+            widget.textLabel,
             style: TextStyle(color: Colors.white),
           )),
         ),

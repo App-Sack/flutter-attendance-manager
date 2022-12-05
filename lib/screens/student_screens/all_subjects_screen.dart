@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/subject_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -36,7 +37,8 @@ class _AllSubjectsScreenState extends State<AllSubjectsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All Subjects Screen"),
+        title: const Text("Subjects"),
+        backgroundColor: kOrangeColor,
       ),
       body: _subjects.length == 0
           ? Center(

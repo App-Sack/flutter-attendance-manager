@@ -91,7 +91,7 @@ class _CalendarState extends State<Calendar> {
         todayDecoration:
             BoxDecoration(color: kOrangeColor, shape: BoxShape.circle),
         todayTextStyle:
-            TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+            TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
       ),
       eventLoader: (day) => _getEvents(context, day),
       calendarBuilders:

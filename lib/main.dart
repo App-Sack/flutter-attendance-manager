@@ -4,6 +4,7 @@ import 'package:attendance_manager/screens/student_screens/subject_calendar_scre
 import 'package:attendance_manager/screens/teacher_screens/all_classes_screen.dart';
 import 'package:attendance_manager/screens/teacher_screens/students_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AllClassesScreen(),
+      home: LoginScreen(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+      ),
       routes: {
         SubjectCalendarScreen.routeName: (ctx) => SubjectCalendarScreen(),
         AllSubjectsScreen.routeName: (ctx) => AllSubjectsScreen(),

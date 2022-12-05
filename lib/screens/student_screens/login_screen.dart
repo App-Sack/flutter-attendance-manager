@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var selected = selectedUser.Student;
   TextEditingController userIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  bool isLoading=false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +90,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 LoginScreenButton(
                                   textLabel: "Login",
+                                  loading: isLoading,
                                   onPressed: () async {
                                     if(userIdController.text.isNotEmpty && passwordController.text.isNotEmpty){
-                                      String response=await AuthMethods().studentLogin(userIdController.text, passwordController.text);
+                                      setState(() {
+                                        isLoading=true;
+                                      });
+                                      String response=await AuthMethods().studentLogin(userIdController.text.toLowerCase(), passwordController.text);
                                       if(response=="success"){
                                         SharedPreferences sp=await SharedPreferences.getInstance();
-                                        sp.setString('usn', '${userIdController.text}');
+                                        sp.setString('usn', '${userIdController.text.toLowerCase()}');
                                         print(sp.getString('usn'));
                                         Navigator.of(context).pushReplacementNamed(AllSubjectsScreen.routeName);
-
                                       }
                                       else{
+                                        setState(() {
+                                          isLoading=false;
+                                        });
                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response)));
                                       }
-
                                     }
                                   },
                                 ),
