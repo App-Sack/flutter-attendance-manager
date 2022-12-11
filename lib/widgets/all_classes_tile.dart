@@ -29,7 +29,7 @@ class ClassTile extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       'CSE:5B', textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, letterSpacing: 4),
+                      style: TextStyle(color: Colors.white, letterSpacing: 3),
                       // child: AutoSizeText(
                       //   subject.getTodayStatus(todayDate),
                       //   style: TextStyle(color: Colors.white),
@@ -44,13 +44,10 @@ class ClassTile extends StatelessWidget {
                 child: Column(
                   children: [
                     const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Text(
-                            'Data structures',
-                            style: TextStyle(color: Colors.black, fontSize: 23),
-                          ),
+                      child: Center(
+                        child: Text(
+                          'Data structures',
+                          style: TextStyle(color: Colors.black, fontSize: 20),
                         ),
                       ),
                     ),
@@ -119,7 +116,7 @@ class ActionButton extends StatelessWidget {
                   text,
                   style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 17,
+                      fontSize: 16,
                       fontFamily: 'OpenSans',
                       fontWeight: FontWeight.w800),
                 ),
