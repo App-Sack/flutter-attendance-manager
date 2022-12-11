@@ -1,5 +1,3 @@
-import 'package:attendance_manager/screens/student_screens/subject_calendar_screen.dart';
-import 'package:attendance_manager/screens/teacher_screens/students_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -14,7 +12,7 @@ class StudentTile extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         decoration: BoxDecoration(
           color: Colors.orange,
           borderRadius: BorderRadius.circular(10),
@@ -23,7 +21,7 @@ class StudentTile extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               Text("Student Name"),
               CircularStepProgressIndicator(
                 width: 50,
@@ -31,6 +29,9 @@ class StudentTile extends StatelessWidget {
                 totalSteps: 10,
                 stepSize: 4,
                 currentStep: 7,
+                child: Center(
+                  child: Text("70%"),
+                ),
               ),
             ],
           ),
