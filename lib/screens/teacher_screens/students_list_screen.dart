@@ -1,3 +1,4 @@
+import 'package:attendance_manager/screens/teacher_screens/attendance_marking_screen.dart';
 import 'package:attendance_manager/widgets/student_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,8 @@ class StudentsListScreen extends StatelessWidget {
               title: "Next",
               colour: Colors.green,
               onPressed: () {
-                //TODO:Navigate to attendance marking screen
+                Navigator.pop(context);
+                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName);
               },
             )
           ],
