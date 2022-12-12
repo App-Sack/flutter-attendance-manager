@@ -1,3 +1,4 @@
+import 'package:attendance_manager/screens/teacher_screens/teacher_calendar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -8,7 +9,7 @@ class StudentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        //Navigator.pushNamed(context, SubjectCalendarScreen.routeName);
+        Navigator.pushNamed(context, TeacherCalenderScreen.routeName);
       },
       child: Container(
         width: double.infinity,
