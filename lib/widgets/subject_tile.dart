@@ -1,7 +1,7 @@
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../screens/student_screens/subject_calendar_screen.dart';
+import '../screens/student_screens/student_calendar_screen.dart';
 
 class SubjectTile extends StatelessWidget {
   final Map<String,dynamic> subjectData;
@@ -12,7 +12,7 @@ class SubjectTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, SubjectCalendarScreen.routeName,
+        Navigator.pushNamed(context, StudentCalendarScreen.routeName,
             arguments: subjectData);
       },
       child: Padding(

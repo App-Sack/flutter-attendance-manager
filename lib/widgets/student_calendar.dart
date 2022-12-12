@@ -7,15 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class Calendar extends StatefulWidget {
+class StudentCalendar extends StatefulWidget {
   final String subId;
-  Calendar(this.subId);
+  StudentCalendar(this.subId);
 
   @override
-  State<Calendar> createState() => _CalendarState();
+  State<StudentCalendar> createState() => _StudentCalendarState();
 }
 
-class _CalendarState extends State<Calendar> {
+class _StudentCalendarState extends State<StudentCalendar> {
   List AttendanceRecords = [];
 
   void getAttendanceData() async {

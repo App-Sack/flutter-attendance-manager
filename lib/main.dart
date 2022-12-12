@@ -1,6 +1,6 @@
 import 'package:attendance_manager/screens/student_screens/all_subjects_screen.dart';
 import 'package:attendance_manager/screens/student_screens/login_screen.dart';
-import 'package:attendance_manager/screens/student_screens/subject_calendar_screen.dart';
+import 'package:attendance_manager/screens/student_screens/student_calendar_screen.dart';
 import 'package:attendance_manager/screens/teacher_screens/all_classes_screen.dart';
 import 'package:attendance_manager/screens/teacher_screens/attendance_marking_screen.dart';
 import 'package:attendance_manager/screens/teacher_screens/students_list_screen.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       routes: {
-        SubjectCalendarScreen.routeName: (ctx) => SubjectCalendarScreen(),
+        StudentCalendarScreen.routeName: (ctx) => StudentCalendarScreen(),
         AllSubjectsScreen.routeName: (ctx) => AllSubjectsScreen(),
         AllClassesScreen.routeName:(ctx)=>AllClassesScreen(),
         StudentsListScreen.routeName:(ctx)=>StudentsListScreen(),

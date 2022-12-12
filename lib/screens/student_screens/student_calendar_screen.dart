@@ -2,16 +2,16 @@ import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import '../../widgets/calendar.dart';
+import '../../widgets/student_calendar.dart';
 
-class SubjectCalendarScreen extends StatefulWidget {
+class StudentCalendarScreen extends StatefulWidget {
   static const routeName = '/subject-calendar-screen';
 
   @override
-  State<SubjectCalendarScreen> createState() => _SubjectCalendarScreenState();
+  State<StudentCalendarScreen> createState() => _StudentCalendarScreenState();
 }
 
-class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
+class _StudentCalendarScreenState extends State<StudentCalendarScreen> {
   void initState() {
     super.initState();
   }
@@ -124,7 +124,7 @@ class _SubjectCalendarScreenState extends State<SubjectCalendarScreen> {
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-              child: Calendar(subjectData['courseCode']),
+              child: StudentCalendar(subjectData['courseCode']),
             ),
           ],
         ),
