@@ -37,13 +37,6 @@ class StudentsListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sample"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                //TODO:Add student to the class
-              },
-              icon: const Icon(Icons.add))
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
