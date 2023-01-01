@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AllClassesScreen(),
+      home: LoginScreen(),
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),

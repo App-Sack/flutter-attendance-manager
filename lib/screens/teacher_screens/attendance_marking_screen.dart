@@ -19,15 +19,15 @@ class AttendanceMarkingScreen extends StatelessWidget {
                     itemCount: 20,
                     itemBuilder: (context, index) => AttendanceTile())),
             Container(
-              margin: EdgeInsets.only(top: 2),
-              decoration: BoxDecoration(color: Colors.red),
+              margin: const EdgeInsets.only(top: 2),
+              decoration: const BoxDecoration(color: Colors.red),
               child: const Center(
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text("Submit attendance"),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

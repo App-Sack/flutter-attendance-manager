@@ -96,11 +96,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                       setState(() {
                                         isLoading=true;
                                       });
-                                      String response=await AuthMethods().studentLogin(userIdController.text.toLowerCase(), passwordController.text);
+                                      String response;
+                                      if(selected==selectedUser.Student){
+                                        response=await AuthMethods().studentLogin(userIdController.text.toLowerCase(), passwordController.text);
+                                      }
+                                      else{
+                                        response=await AuthMethods().TeacherLogin(userIdController.text.toLowerCase(), passwordController.text);
+                                      }
                                       if(response=="success"){
                                         SharedPreferences sp=await SharedPreferences.getInstance();
                                         sp.setString('usn', '${userIdController.text.toLowerCase()}');
-                                        print(sp.getString('usn'));
                                         Navigator.of(context).pushReplacementNamed(AllSubjectsScreen.routeName);
                                       }
                                       else{
