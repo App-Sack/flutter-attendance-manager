@@ -22,7 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLoading=false;
-
+  void clearTheData(){
+    userIdController.clear();
+    passwordController.clear();
+  }
+  @override
+  void dispose() {
+    userIdController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final statusBarheight = MediaQuery.of(context).padding.top;
@@ -77,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   passwordKeyboardType: TextInputType.datetime,
                                 )
                               : UserInputFormContainer(
-                                  inputText: "inputText",
-                                  passwordText: "passwordText",
+                                  inputText: "Email Id",
+                                  passwordText: "Password",
                                   inputKeyboardType: TextInputType.text,
                                   passwordKeyboardType: TextInputType.number,
                                   userIdController: userIdController,
@@ -125,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ? LoginScreenButton(
                                         textLabel: "Login As Teacher",
                                         onPressed: () {
+                                          clearTheData();
                                           setState(() {
                                             selected = selectedUser.Teacher;
                                           });
@@ -133,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     : LoginScreenButton(
                                         textLabel: "Login As Student",
                                         onPressed: () {
+                                          clearTheData();
                                           setState(() {
                                             selected = selectedUser.Student;
                                           });
