@@ -6,10 +6,13 @@ import '../screens/student_screens/student_calendar_screen.dart';
 class SubjectTile extends StatelessWidget {
   final Map<String,dynamic> subjectData;
 
-  const SubjectTile({super.key, required this.subjectData});
+  SubjectTile({super.key, required this.subjectData});
 
   @override
   Widget build(BuildContext context) {
+    double attendedPercentage=subjectData['totalClasses']!=0?(subjectData['totalPresent'] / subjectData['totalClasses'])*10:0;
+    String attendanceStatusText=attendedPercentage==0?"N/A":attendedPercentage>=7.5?"On Track":"Off Track";
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, StudentCalendarScreen.routeName,
@@ -42,17 +45,10 @@ class SubjectTile extends StatelessWidget {
                       totalSteps: 10,
                       stepSize: 4,
                       unselectedColor: Colors.white70,
-                      selectedColor: ((subjectData['totalPresent'] /
-                          subjectData['totalClasses']) *
-                          10)>=7.5?Colors.green:Colors.red,
-                      currentStep: ((subjectData['totalPresent'] /
-                          subjectData['totalClasses']) *
-                          10)
+                      selectedColor: (attendedPercentage)>=7.5?Colors.green:Colors.red,
+                      currentStep: (attendedPercentage)
                           .toInt(),
-                      child: Center(child: Text("${((subjectData['totalPresent'] /
-                          subjectData['totalClasses']) *
-                          100)
-                          .toInt()}%",style: TextStyle(fontSize: 12,color: Colors.white),),),
+                      child: Center(child: Text("${(attendedPercentage*10).toInt()}%",style: TextStyle(fontSize: 12,color: Colors.white),),),
                     ),
                   ],
                 ),
@@ -61,9 +57,7 @@ class SubjectTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Attendance : ${subjectData['totalPresent']}/${subjectData['totalClasses']}",style: TextStyle(color: Colors.white70),),
-                    ((subjectData['totalPresent'] /
-                        subjectData['totalClasses']) *
-                        10)>=7.5?Text("On track",style: TextStyle(color: Colors.white70),):Text("Off track",style: TextStyle(color: Colors.white70),),
+                    Text(attendanceStatusText,style: TextStyle(color: Colors.white70),),
                   ],
                 )
               ],
