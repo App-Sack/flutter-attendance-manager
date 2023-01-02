@@ -24,13 +24,22 @@ class AuthMethods{
   }
 
   Future<String> TeacherLogin(String email,String password) async{
-    print("called");
-    final url=Uri.parse("https://sjce12345.pythonanywhere.com/api/docs/#/user/user_token_create");
+    final url=Uri.parse("https://sjce12345.pythonanywhere.com/api/user/token/");
     final response= await http.post(url,body:json.encode({
       'email':email,
       'password':password
-    }));
-    print(response.body);
-    return "successs";
+    }),headers: {
+      "content-type" : "application/json",
+      "accept" : "application/json",
+    },);
+    final responseData=json.decode(response.body);
+    if(responseData['non_field_errors']!=null){
+      return "Invalid Credentials";
+    }
+    else{
+      //TODO:To be modified later
+      //responseData['token']
+      return "successs";
+    }
   }
 }
