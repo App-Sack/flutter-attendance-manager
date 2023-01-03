@@ -1,3 +1,4 @@
+import 'package:attendance_manager/resources/auth_methods.dart';
 import 'package:attendance_manager/screens/student_screens/all_subjects_screen.dart';
 import 'package:attendance_manager/screens/student_screens/login_screen.dart';
 import 'package:attendance_manager/screens/student_screens/student_calendar_screen.dart';
@@ -6,25 +7,51 @@ import 'package:attendance_manager/screens/teacher_screens/attendance_marking_sc
 import 'package:attendance_manager/screens/teacher_screens/students_list_screen.dart';
 import 'package:attendance_manager/screens/teacher_screens/teacher_calendar_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    Future.delayed(Duration(seconds: 3)).then((value) => FlutterNativeSplash.remove());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: FutureBuilder(
+        future: AuthMethods().CheckLogin(),
+        builder: (context,authResult){
+          if(authResult.data=="student"){
+            return AllSubjectsScreen();
+          }
+          if(authResult.data=="teacher"){
+            return AllClassesScreen();
+          }
+          return LoginScreen();
+        },
+      ),
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       routes: {
+        LoginScreen.routeName:(ctx)=>LoginScreen(),
         StudentCalendarScreen.routeName: (ctx) => StudentCalendarScreen(),
         AllSubjectsScreen.routeName: (ctx) => AllSubjectsScreen(),
         AllClassesScreen.routeName:(ctx)=>AllClassesScreen(),

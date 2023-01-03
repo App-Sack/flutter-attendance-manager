@@ -1,10 +1,22 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthMethods{
   
-  
+  Future<String> CheckLogin() async{
+    SharedPreferences sp=await SharedPreferences.getInstance();
+    if(sp.getString('usn')!=null){
+      return "student";
+    }
+    if(sp.getString('token')!=null){
+      return "teacher";
+    }
+    else{
+      return "login";
+    }
+  }
   Future<String> studentLogin(String usn,String password) async{
     final url=Uri.parse("https://sjce12345.pythonanywhere.com/api/student/$usn");
     final data=await http.get(url);
@@ -12,6 +24,8 @@ class AuthMethods{
     String? dob=extractedData['dob'];
     if(dob!=null){
       if(dob==password){
+        SharedPreferences sp=await SharedPreferences.getInstance();
+        sp.setString('usn', usn);
         return "success";
       }
       else{
@@ -37,9 +51,14 @@ class AuthMethods{
       return "Invalid Credentials";
     }
     else{
-      //TODO:To be modified later
-      //responseData['token']
-      return "successs";
+      SharedPreferences sp=await SharedPreferences.getInstance();
+      sp.setString('token',responseData['token']);
+      return "success";
     }
+  }
+
+  void LogOut()async{
+    SharedPreferences sp=await SharedPreferences.getInstance();
+    sp.clear();
   }
 }

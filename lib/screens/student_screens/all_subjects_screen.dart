@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:attendance_manager/resources/auth_methods.dart';
+import 'package:attendance_manager/screens/student_screens/login_screen.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/subject_tile.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +18,9 @@ class AllSubjectsScreen extends StatefulWidget {
 class _AllSubjectsScreenState extends State<AllSubjectsScreen> {
   List _subjects = [];
   void getSubjects() async {
-    SharedPreferences sp=await SharedPreferences.getInstance();
+    SharedPreferences sp = await SharedPreferences.getInstance();
     var url = Uri.parse(
-        "https://sjce12345.pythonanywhere.com/api/student/get-student-attendance/${sp.getString('usn')}"
-            );
+        "https://sjce12345.pythonanywhere.com/api/student/get-student-attendance/${sp.getString('usn')}");
     var data = await http.get(url);
     final extractedData = json.decode(data.body) as List<dynamic>;
     setState(() {
@@ -39,6 +40,14 @@ class _AllSubjectsScreenState extends State<AllSubjectsScreen> {
       appBar: AppBar(
         title: const Text("Subjects"),
         backgroundColor: kOrangeColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                AuthMethods().LogOut();
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: _subjects.length == 0
           ? Center(
@@ -46,7 +55,8 @@ class _AllSubjectsScreenState extends State<AllSubjectsScreen> {
             )
           : ListView.builder(
               itemCount: _subjects.length,
-              itemBuilder: (context, index) => SubjectTile(subjectData: _subjects[index]),
+              itemBuilder: (context, index) =>
+                  SubjectTile(subjectData: _subjects[index]),
             ),
     );
   }

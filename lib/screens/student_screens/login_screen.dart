@@ -1,5 +1,6 @@
 import 'package:attendance_manager/resources/auth_methods.dart';
 import 'package:attendance_manager/screens/student_screens/all_subjects_screen.dart';
+import 'package:attendance_manager/screens/teacher_screens/all_classes_screen.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/login_screen_button.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ enum selectedUser {
 }
 
 class LoginScreen extends StatefulWidget {
+  static const routeName='/login-screen';
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -112,10 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       else{
                                         response=await AuthMethods().TeacherLogin(userIdController.text.toLowerCase(), passwordController.text);
                                       }
+                                      SharedPreferences sp=await SharedPreferences.getInstance();
                                       if(response=="success"){
-                                        SharedPreferences sp=await SharedPreferences.getInstance();
-                                        sp.setString('usn', '${userIdController.text.toLowerCase()}');
-                                        Navigator.of(context).pushReplacementNamed(AllSubjectsScreen.routeName);
+                                        if(selected==selectedUser.Student){
+                                          Navigator.of(context).pushReplacementNamed(AllSubjectsScreen.routeName);
+                                        }
+                                        else{
+                                          Navigator.of(context).pushReplacementNamed(AllClassesScreen.routeName);
+                                        }
                                       }
                                       else{
                                         setState(() {
