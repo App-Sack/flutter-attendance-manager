@@ -1,3 +1,4 @@
+import 'package:attendance_manager/providers/teacher.dart';
 import 'package:attendance_manager/resources/auth_methods.dart';
 import 'package:attendance_manager/screens/student_screens/all_subjects_screen.dart';
 import 'package:attendance_manager/screens/student_screens/login_screen.dart';
@@ -9,12 +10,16 @@ import 'package:attendance_manager/screens/teacher_screens/teacher_calendar_scre
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [
+        Provider.value(value: TeacherProvider()),
+      ],
+      child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -42,6 +47,7 @@ class _MyAppState extends State<MyApp> {
             return AllSubjectsScreen();
           }
           if(authResult.data=="teacher"){
+            Provider.of<TeacherProvider>(context).fetchAndSetTeacher();
             return AllClassesScreen();
           }
           return LoginScreen();

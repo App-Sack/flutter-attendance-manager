@@ -2,7 +2,11 @@ import 'package:attendance_manager/screens/teacher_screens/students_list_screen.
 import 'package:flutter/material.dart';
 
 class ClassTile extends StatelessWidget {
-  const ClassTile({Key? key}) : super(key: key);
+
+  final String subjectName;
+  final String section;
+
+  const ClassTile({super.key, required this.subjectName, required this.section});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +27,12 @@ class ClassTile extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5))),
-                child: const RotatedBox(
+                child: RotatedBox(
                   quarterTurns: 3,
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'CSE:5B', textAlign: TextAlign.center,
+                      'CSE:$section', textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, letterSpacing: 3),
                       // child: AutoSizeText(
                       //   subject.getTodayStatus(todayDate),
@@ -43,10 +47,10 @@ class ClassTile extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Center(
                         child: Text(
-                          'Data structures',
+                          subjectName,
                           style: TextStyle(color: Colors.black, fontSize: 20),
                         ),
                       ),
