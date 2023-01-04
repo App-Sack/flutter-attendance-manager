@@ -46,8 +46,8 @@ class _AllClassesScreenState extends State<AllClassesScreen> {
           : ListView.builder(
         itemCount: classes.length,
         itemBuilder: (context, index) => ClassTile(
-          subjectName: classes[index]['course']!,
-          section: classes[index]['section']!,
+          subjectName: classes[index]['courseName'],
+          section: classes[index]['section'],
         ),
       ),
     );

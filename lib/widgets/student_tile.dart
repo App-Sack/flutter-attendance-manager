@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class StudentTile extends StatelessWidget {
-  const StudentTile({Key? key}) : super(key: key);
+  final String name;
+  final int attendancePercentage;
 
+  StudentTile({super.key, required this.name, required this.attendancePercentage});
+  int requiredAttendance=75;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -22,16 +25,21 @@ class StudentTile extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Student Name"),
+            children:[
+              Text(name),
               CircularStepProgressIndicator(
                 width: 50,
                 height: 50,
                 totalSteps: 10,
                 stepSize: 4,
-                currentStep: 7,
+                currentStep: (attendancePercentage/10).toInt() ,
+                selectedColor:
+                attendancePercentage/10> requiredAttendance / 10
+                    ? Colors.lightGreen
+                    : Colors.red,
+                unselectedColor: Colors.white,
                 child: Center(
-                  child: Text("70%"),
+                  child: Text("$attendancePercentage%"),
                 ),
               ),
             ],

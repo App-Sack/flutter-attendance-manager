@@ -1,3 +1,4 @@
+import 'package:attendance_manager/providers/student.dart';
 import 'package:attendance_manager/providers/teacher.dart';
 import 'package:attendance_manager/resources/auth_methods.dart';
 import 'package:attendance_manager/screens/student_screens/all_subjects_screen.dart';
@@ -18,6 +19,7 @@ void main() {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: TeacherProvider()),
+        ChangeNotifierProvider.value(value: StudentProvider()),
       ],
       child: const MyApp()));
 }

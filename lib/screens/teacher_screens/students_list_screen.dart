@@ -1,11 +1,29 @@
+import 'package:attendance_manager/providers/student.dart';
 import 'package:attendance_manager/screens/teacher_screens/attendance_marking_screen.dart';
 import 'package:attendance_manager/widgets/student_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class StudentsListScreen extends StatelessWidget {
+class StudentsListScreen extends StatefulWidget {
   static const routeName = '/students-list-screen';
   const StudentsListScreen({Key? key}) : super(key: key);
 
+  @override
+  State<StudentsListScreen> createState() => _StudentsListScreenState();
+}
+
+class _StudentsListScreenState extends State<StudentsListScreen> {
+  List<Student> studentsList=[];
+  @override
+  void initState() {
+    Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents().then((value){
+      studentsList=Provider.of<StudentProvider>(context,listen: false).studentsList;
+      setState(() {
+        studentsList;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Future DailogBox() {
@@ -33,12 +51,11 @@ class StudentsListScreen extends StatelessWidget {
         ),
       );
     }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sample"),
       ),
-      body: Padding(
+      body: studentsList.isEmpty?Center(child: CircularProgressIndicator()):Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
@@ -58,7 +75,7 @@ class StudentsListScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 9, itemBuilder: (context, index) => StudentTile()),
+                  itemCount: studentsList.length, itemBuilder: (context, index) => StudentTile(name: studentsList[index].name,attendancePercentage: studentsList[index].percentage.toInt(),)),
             ),
           ],
         ),
