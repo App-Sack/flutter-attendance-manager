@@ -53,6 +53,7 @@ class AuthMethods{
     else{
       SharedPreferences sp=await SharedPreferences.getInstance();
       sp.setString('token',responseData['token']);
+      sp.setString('email', email);
       return "success";
     }
   }

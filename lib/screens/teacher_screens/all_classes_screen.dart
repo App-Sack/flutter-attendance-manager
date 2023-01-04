@@ -16,15 +16,17 @@ class AllClassesScreen extends StatefulWidget {
 class _AllClassesScreenState extends State<AllClassesScreen> {
   List<dynamic> classes=[];
 
-  @override
-  void didChangeDependencies() {
-    setState(() {
-      classes = Provider.of<TeacherProvider>(context).getClasses();
-      print(classes);
-    });
-    super.didChangeDependencies();
-  }
 
+  @override
+  void initState() {
+    Provider.of<TeacherProvider>(context,listen: false).fetchAndSetTeacher().then((value){
+      classes = Provider.of<TeacherProvider>(context,listen: false).getClasses();
+    setState(() {
+        classes;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

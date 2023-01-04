@@ -17,7 +17,7 @@ void main() {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(MultiProvider(
       providers: [
-        Provider.value(value: TeacherProvider()),
+        ChangeNotifierProvider.value(value: TeacherProvider()),
       ],
       child: const MyApp()));
 }
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
             return AllSubjectsScreen();
           }
           if(authResult.data=="teacher"){
-            Provider.of<TeacherProvider>(context).fetchAndSetTeacher();
+
             return AllClassesScreen();
           }
           return LoginScreen();

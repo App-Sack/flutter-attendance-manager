@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   inputText: "Email Id",
                                   passwordText: "Password",
                                   inputKeyboardType: TextInputType.text,
-                                  passwordKeyboardType: TextInputType.number,
+                                  passwordKeyboardType: TextInputType.text,
                                   userIdController: userIdController,
                                   passwordController: passwordController),
                           Container(
