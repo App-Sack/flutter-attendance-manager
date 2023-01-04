@@ -15,14 +15,18 @@ class AllClassesScreen extends StatefulWidget {
 
 class _AllClassesScreenState extends State<AllClassesScreen> {
   List<dynamic> classes=[];
+
   @override
-  void initState() {
-    classes = Provider.of<TeacherProvider>(context).getClasses();
-    super.initState();
+  void didChangeDependencies() {
+    setState(() {
+      classes = Provider.of<TeacherProvider>(context).getClasses();
+      print(classes);
+    });
+    super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Classes"),
