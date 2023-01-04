@@ -5,8 +5,8 @@ class ClassTile extends StatelessWidget {
 
   final String subjectName;
   final String section;
-
-  const ClassTile({super.key, required this.subjectName, required this.section});
+  final String courseId;
+  const ClassTile({super.key, required this.subjectName, required this.section,required this.courseId});
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +61,18 @@ class ClassTile extends StatelessWidget {
                           color: Colors.green.shade300,
                           text: 'Attendence',
                           borderRadius: 0.0,
-                          onPressed: true,
+                          onPressed: (){
+                            Navigator.of(context).pushNamed(StudentsListScreen.routeName,arguments: [section,courseId]);
+                            //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>StudentsListScreen(section:section ,courseId: courseId,)));
+                          },
                         ),
                         ActionButton(
                           color: Colors.red.shade300,
                           text: 'cie',
                           borderRadius: 5.0,
-                          onPressed: false,
+                          onPressed: (){
+                            //TODO:Navigate to cie screen
+                          },
                         ),
                       ],
                     )
@@ -86,7 +91,7 @@ class ActionButton extends StatelessWidget {
   final Color color;
   final String text;
   final double borderRadius;
-  final bool onPressed;
+  final Function()? onPressed;
   const ActionButton(
       {super.key,
       required this.color,
@@ -105,14 +110,7 @@ class ActionButton extends StatelessWidget {
                 BorderRadius.only(bottomRight: Radius.circular(borderRadius)),
           ),
           child: InkWell(
-            onTap: () {
-              if (onPressed) {
-                //Attendance Screen
-                Navigator.of(context).pushNamed(StudentsListScreen.routeName);
-              } else {
-                //Cie Screen
-              }
-            },
+            onTap:onPressed,
             child: Center(
               child: Padding(
                 padding: EdgeInsets.all(10.0),

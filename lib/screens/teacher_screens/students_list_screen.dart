@@ -16,10 +16,14 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
   List<Student> studentsList=[];
   @override
   void initState() {
-    Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents().then((value){
-      studentsList=Provider.of<StudentProvider>(context,listen: false).studentsList;
-      setState(() {
-        studentsList;
+
+    Future.delayed(Duration.zero,(){
+      List data=ModalRoute.of(context)!.settings.arguments as List;
+      Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents(data[0],data[1]).then((value){
+        studentsList=Provider.of<StudentProvider>(context,listen: false).studentsList;
+        setState(() {
+          studentsList;
+        });
       });
     });
     super.initState();

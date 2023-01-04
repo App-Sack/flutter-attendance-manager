@@ -13,8 +13,9 @@ class Student{
 class StudentProvider with ChangeNotifier{
   List<Student> students=[];
 
-  Future fetchAndSetStudents() async{
-      var url=Uri.parse("https://sjce12345.pythonanywhere.com/api/teacher/get-students-in-section/5B/20cs510/");
+  Future fetchAndSetStudents(String section,String courseId) async{
+      students=[];
+      var url=Uri.parse("https://sjce12345.pythonanywhere.com/api/teacher/get-students-in-section/$section/$courseId/");
       var response=await http.get(url);
       var responseData=json.decode(response.body);
       for (var element in responseData) {

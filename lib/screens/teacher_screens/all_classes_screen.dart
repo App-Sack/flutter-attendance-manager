@@ -48,6 +48,7 @@ class _AllClassesScreenState extends State<AllClassesScreen> {
         itemBuilder: (context, index) => ClassTile(
           subjectName: classes[index]['courseName'],
           section: classes[index]['section'],
+          courseId: classes[index]['courseId'],
         ),
       ),
     );
