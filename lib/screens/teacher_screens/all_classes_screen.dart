@@ -21,7 +21,7 @@ class _AllClassesScreenState extends State<AllClassesScreen> {
   void initState() {
     Provider.of<TeacherProvider>(context,listen: false).fetchAndSetTeacher().then((value){
       classes = Provider.of<TeacherProvider>(context,listen: false).getClasses();
-    setState(() {
+      setState(() {
         classes;
       });
     });
@@ -44,12 +44,12 @@ class _AllClassesScreenState extends State<AllClassesScreen> {
       body: classes.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
-              itemCount: classes.length,
-              itemBuilder: (context, index) => ClassTile(
-                subjectName: classes[index]['course']!,
-                section: classes[index]['section']!,
-              ),
-            ),
+        itemCount: classes.length,
+        itemBuilder: (context, index) => ClassTile(
+          subjectName: classes[index]['course']!,
+          section: classes[index]['section']!,
+        ),
+      ),
     );
   }
 }

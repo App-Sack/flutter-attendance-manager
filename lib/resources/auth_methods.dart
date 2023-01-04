@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthMethods{
-  
+
   Future<String> CheckLogin() async{
     SharedPreferences sp=await SharedPreferences.getInstance();
     if(sp.getString('usn')!=null){

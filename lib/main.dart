@@ -47,7 +47,6 @@ class _MyAppState extends State<MyApp> {
             return AllSubjectsScreen();
           }
           if(authResult.data=="teacher"){
-
             return AllClassesScreen();
           }
           return LoginScreen();

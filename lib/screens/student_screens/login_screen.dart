@@ -67,8 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       // ]),
                     ),
                     height:
-                        (MediaQuery.of(context).size.height - statusBarheight) *
-                            0.75,
+                    (MediaQuery.of(context).size.height - statusBarheight) *
+                        0.75,
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -80,20 +80,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           selected == selectedUser.Student
                               ? UserInputFormContainer(
-                                  inputText: 'USN',
-                                  passwordText: "DDMMYYYY",
-                                  userIdController: userIdController,
-                                  passwordController: passwordController,
-                                  inputKeyboardType: TextInputType.text,
-                                  passwordKeyboardType: TextInputType.datetime,
-                                )
+                            inputText: 'USN',
+                            passwordText: "DDMMYYYY",
+                            userIdController: userIdController,
+                            passwordController: passwordController,
+                            inputKeyboardType: TextInputType.text,
+                            passwordKeyboardType: TextInputType.datetime,
+                          )
                               : UserInputFormContainer(
-                                  inputText: "Email Id",
-                                  passwordText: "Password",
-                                  inputKeyboardType: TextInputType.text,
-                                  passwordKeyboardType: TextInputType.text,
-                                  userIdController: userIdController,
-                                  passwordController: passwordController),
+                              inputText: "Email Id",
+                              passwordText: "Password",
+                              inputKeyboardType: TextInputType.text,
+                              passwordKeyboardType: TextInputType.text,
+                              userIdController: userIdController,
+                              passwordController: passwordController),
                           Container(
                             height: MediaQuery.of(context).size.height * 0.2,
                             child: Column(
@@ -138,23 +138,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 selected == selectedUser.Student
                                     ? LoginScreenButton(
-                                        textLabel: "Login As Teacher",
-                                        onPressed: () {
-                                          clearTheData();
-                                          setState(() {
-                                            selected = selectedUser.Teacher;
-                                          });
-                                        },
-                                      )
+                                  textLabel: "Login As Teacher",
+                                  onPressed: () {
+                                    clearTheData();
+                                    setState(() {
+                                      selected = selectedUser.Teacher;
+                                    });
+                                  },
+                                )
                                     : LoginScreenButton(
-                                        textLabel: "Login As Student",
-                                        onPressed: () {
-                                          clearTheData();
-                                          setState(() {
-                                            selected = selectedUser.Student;
-                                          });
-                                        },
-                                      ),
+                                  textLabel: "Login As Student",
+                                  onPressed: () {
+                                    clearTheData();
+                                    setState(() {
+                                      selected = selectedUser.Student;
+                                    });
+                                  },
+                                ),
                               ],
                             ),
                           )
