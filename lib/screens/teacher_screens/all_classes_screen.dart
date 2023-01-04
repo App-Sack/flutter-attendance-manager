@@ -5,13 +5,24 @@ import 'package:attendance_manager/widgets/all_classes_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AllClassesScreen extends StatelessWidget {
+class AllClassesScreen extends StatefulWidget {
   static const routeName = 'all-classes-screen';
   const AllClassesScreen({Key? key}) : super(key: key);
 
   @override
+  State<AllClassesScreen> createState() => _AllClassesScreenState();
+}
+
+class _AllClassesScreenState extends State<AllClassesScreen> {
+  List<dynamic> classes=[];
+  @override
+  void initState() {
+    classes = Provider.of<TeacherProvider>(context).getClasses();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    List<dynamic> classes = Provider.of<TeacherProvider>(context).getClasses();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("All Classes"),
