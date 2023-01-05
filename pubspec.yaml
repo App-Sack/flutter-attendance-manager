@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.0.15
   google_fonts: ^3.0.1
   flutter_native_splash: ^2.2.16
+  flutter_form_builder: ^7.7.0
 
 dev_dependencies:
   flutter_test:
