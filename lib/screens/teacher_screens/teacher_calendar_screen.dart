@@ -14,6 +14,7 @@ class TeacherCalenderScreen extends StatefulWidget {
 }
 
 class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
+  String name='';
   List AttendanceRecords = [];
   int percentage=0;
   int present=0;
@@ -27,7 +28,6 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
     var data = await http.get(url);
     final extractedData = json.decode(data.body) as List<dynamic>;
     setState(() {
-      print(extractedData);
       AttendanceRecords = extractedData;
     });
   }
@@ -39,13 +39,14 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
       present=args[2];
       totalClasses=args[3];
       percentage=args[4];
+      name=args[5];
     });
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(title: Text("sample"),),
+      appBar:AppBar(title: Text(name),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -85,7 +86,7 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
                             child:Center(
                               child: Text(
                                 "${(percentage).toString()}%",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 30, color: Colors.black38),
                               ),
                             ),
@@ -131,7 +132,7 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
               )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-            child: TeacherCalendar(),
+            child: TeacherCalendar(attendanceData: AttendanceRecords,),
           ),
         ],
       ),

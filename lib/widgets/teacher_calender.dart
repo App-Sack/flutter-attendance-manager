@@ -3,18 +3,37 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TeacherCalendar extends StatefulWidget {
-  const TeacherCalendar({Key? key}) : super(key: key);
+  final List<dynamic> attendanceData;
+
+  const TeacherCalendar({super.key, required this.attendanceData});
 
   @override
   State<TeacherCalendar> createState() => _TeacherCalendarState();
 }
 
 class _TeacherCalendarState extends State<TeacherCalendar> {
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    print(widget.attendanceData);
+    super.initState();
+  }
   List _getEvents(BuildContext context, DateTime day) {
     List events = [];
     //final subject = Provider.of<Subjects>(context).findById(widget.subId);
-    final String thisDay = DateFormat('dd-MM-yyyy').format(day);
+    final String thisDay=DateFormat('dd-MM-yyyy').format(day);
+
+    widget.attendanceData.forEach((record) {
+      DateTime recordDate = DateTime.parse(record["date"]);
+      if (DateFormat('dd-MM-yyyy').format(recordDate) == thisDay &&
+          record["isPresent"]) {
+        events.add('p');
+      }
+      if (DateFormat('dd-MM-yyyy').format(recordDate) == thisDay &&
+          !record["isPresent"]) {
+        events.add('a');
+      }
+    });
 
     // subject.presentEvents.where((e) => e == thisDay).forEach((e) {
     //   events.add('p');
@@ -28,7 +47,6 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
 
     return events;
   }
-
   void _addEventOnTap(DateTime d) {
     showDialog(
         context: context,
@@ -49,7 +67,6 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                       onPressed: () {
                         setState(() {
                           print("Present");
-
                           //subject.addPresentEvent(date);
                         });
                         Navigator.of(context).pop();

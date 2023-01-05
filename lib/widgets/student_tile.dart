@@ -16,7 +16,7 @@ class StudentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, TeacherCalenderScreen.routeName,arguments: [usn,courseId,present,totalClasses,attendancePercentage]);
+        Navigator.pushNamed(context, TeacherCalenderScreen.routeName,arguments: [usn,courseId,present,totalClasses,attendancePercentage,name]);
       },
       child: Container(
         width: double.infinity,
