@@ -50,7 +50,7 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
               colour: Colors.green,
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName);
+                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName,arguments: studentsList);
               },
             )
           ],
@@ -61,7 +61,7 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
       appBar: AppBar(
         title: const Text("Sample"),
       ),
-      body: studentsList.isEmpty?Center(child: CircularProgressIndicator()):Padding(
+      body: studentsList.isEmpty?const Center(child: CircularProgressIndicator()):Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
