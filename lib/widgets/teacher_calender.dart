@@ -12,25 +12,19 @@ class TeacherCalendar extends StatefulWidget {
 }
 
 class _TeacherCalendarState extends State<TeacherCalendar> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    print(widget.attendanceData);
-    super.initState();
-  }
   List _getEvents(BuildContext context, DateTime day) {
     List events = [];
     //final subject = Provider.of<Subjects>(context).findById(widget.subId);
-    final String thisDay=DateFormat('dd-MM-yyyy').format(day);
+    final String thisDay = DateFormat('dd-MM-yyyy').format(day);
 
     widget.attendanceData.forEach((record) {
-      DateTime recordDate = DateTime.parse(record["date"]);
+      DateTime recordDate = DateTime.parse(record.date);
       if (DateFormat('dd-MM-yyyy').format(recordDate) == thisDay &&
-          record["isPresent"]) {
+          record.isPresent) {
         events.add('p');
       }
       if (DateFormat('dd-MM-yyyy').format(recordDate) == thisDay &&
-          !record["isPresent"]) {
+          !record.isPresent) {
         events.add('a');
       }
     });
@@ -47,6 +41,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
 
     return events;
   }
+
   void _addEventOnTap(DateTime d) {
     showDialog(
         context: context,
@@ -101,9 +96,9 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                       setState(() {
                         print("clear all");
                       }
-                        //subject.clearAllEventsOnDay(date);
+                          //subject.clearAllEventsOnDay(date);
 
-                      );
+                          );
                       Navigator.of(context).pop();
                     },
                     child: Text(
@@ -119,6 +114,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
           );
         });
   }
+
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
@@ -130,7 +126,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
       daysOfWeekStyle: DaysOfWeekStyle(
           weekdayStyle: TextStyle(fontWeight: FontWeight.w800),
           weekendStyle:
-          TextStyle(color: Colors.red, fontWeight: FontWeight.w600)),
+              TextStyle(color: Colors.red, fontWeight: FontWeight.w600)),
       weekendDays: [DateTime.sunday],
       headerStyle: HeaderStyle(
         formatButtonVisible: false,
@@ -144,11 +140,11 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
         todayDecoration: BoxDecoration(
             color: Colors.lightBlue.shade50, shape: BoxShape.circle),
         todayTextStyle:
-        TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+            TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
       ),
       eventLoader: (day) => _getEvents(context, day),
       calendarBuilders:
-      CalendarBuilders(markerBuilder: (context, date, events) {
+          CalendarBuilders(markerBuilder: (context, date, events) {
         return ListView(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
@@ -179,5 +175,3 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
     );
   }
 }
-
-
