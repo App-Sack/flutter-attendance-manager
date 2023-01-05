@@ -1,11 +1,47 @@
+import 'dart:convert';
+
 import 'package:attendance_manager/widgets/teacher_calender.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:http/http.dart' as http;
 
-class TeacherCalenderScreen extends StatelessWidget {
+class TeacherCalenderScreen extends StatefulWidget {
   static const routeName='/teacher-calendar-screen';
   const TeacherCalenderScreen({Key? key}) : super(key: key);
 
+  @override
+  State<TeacherCalenderScreen> createState() => _TeacherCalenderScreenState();
+}
+
+class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
+  List AttendanceRecords = [];
+  int percentage=0;
+  int present=0;
+  int totalClasses=0;
+  //TODO:Fetch required attendance from the server
+  int requiredAttendance=75;
+
+  void getAttendanceData(String usn,String courseId) async {
+    var url = Uri.parse(
+        "https://sjce12345.pythonanywhere.com/api/student/get-calendar-attendance/$usn/$courseId/");
+    var data = await http.get(url);
+    final extractedData = json.decode(data.body) as List<dynamic>;
+    setState(() {
+      print(extractedData);
+      AttendanceRecords = extractedData;
+    });
+  }
+  @override
+  void initState() {
+    Future.delayed(Duration.zero,(){
+      List args=ModalRoute.of(context)!.settings.arguments as List;
+      getAttendanceData(args[0],args[1]);
+      present=args[2];
+      totalClasses=args[3];
+      percentage=args[4];
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,23 +71,20 @@ class TeacherCalenderScreen extends StatelessWidget {
                         children: [
                           CircularStepProgressIndicator(
                             totalSteps: 10,
-                            currentStep: 7,
-                            //attendedPercentage.toInt(),
+                            currentStep:( percentage/10).toInt(),
                             stepSize: 5,
-                            selectedColor:Colors.lightGreenAccent.shade200,
-                            // attendedPercentage > requiredAttendance / 10
-                            //     ? Colors.lightGreenAccent.shade200
-                            //     : Colors.redAccent.shade200,
+                            selectedColor: (percentage/10) > requiredAttendance / 10
+                                ? Colors.lightGreenAccent.shade200
+                                : Colors.redAccent.shade200,
                             unselectedColor: Colors.grey[200],
                             padding: 0,
                             width: MediaQuery.of(context).size.height*0.16,
                             height: MediaQuery.of(context).size.height*0.16,
                             selectedStepSize: 9,
                             roundedCap: (_, __) => true,
-                            child: const Center(
+                            child:Center(
                               child: Text(
-                                "70%",
-                                //"${(attendedPercentage * 10).toStringAsFixed(0)}%",
+                                "${(percentage).toString()}%",
                                 style: TextStyle(
                                     fontSize: 30, color: Colors.black38),
                               ),
@@ -63,21 +96,21 @@ class TeacherCalenderScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children:[
                               Text(
-                                "Prsent:25",
+                                "Prsent:$present",
                                 //"Present: ${subject.present}",
                                 style: TextStyle(
                                     fontSize: 26, color: Colors.black45),
                               ),
                               Text(
-                                "Absent:3",
+                                "Absent:${totalClasses-present}",
                                 //"Absent: ${subject.absent}",
                                 style: TextStyle(
                                     fontSize: 25, color: Colors.black45),
                               ),
                               Text(
-                                "Total:28",
+                                "Total:$totalClasses",
                                 //"Total: ${subject.absent + subject.present}",
                                 style: TextStyle(
                                     fontSize: 25, color: Colors.black45),

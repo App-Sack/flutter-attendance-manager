@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class StudentTile extends StatelessWidget {
+  final String usn;
   final String name;
   final int attendancePercentage;
+  final String courseId;
+  final int totalClasses;
+  final int present;
 
-  StudentTile({super.key, required this.name, required this.attendancePercentage});
+  StudentTile({super.key, required this.name, required this.attendancePercentage,required this.usn,required this.courseId,required this.present,required this.totalClasses});
   int requiredAttendance=75;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, TeacherCalenderScreen.routeName);
+        Navigator.pushNamed(context, TeacherCalenderScreen.routeName,arguments: [usn,courseId,present,totalClasses,attendancePercentage]);
       },
       child: Container(
         width: double.infinity,

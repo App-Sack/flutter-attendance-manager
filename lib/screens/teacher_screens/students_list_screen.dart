@@ -13,13 +13,15 @@ class StudentsListScreen extends StatefulWidget {
 }
 
 class _StudentsListScreenState extends State<StudentsListScreen> {
+  late String courseId;
   List<Student> studentsList=[];
   @override
   void initState() {
 
     Future.delayed(Duration.zero,(){
       List data=ModalRoute.of(context)!.settings.arguments as List;
-      Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents(data[0],data[1]).then((value){
+      courseId=data[1];
+      Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents(data[0],courseId).then((value){
         studentsList=Provider.of<StudentProvider>(context,listen: false).studentsList;
         setState(() {
           studentsList;
@@ -79,7 +81,7 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: studentsList.length, itemBuilder: (context, index) => StudentTile(name: studentsList[index].name,attendancePercentage: studentsList[index].percentage.toInt(),)),
+                  itemCount: studentsList.length, itemBuilder: (context, index) => StudentTile(name: studentsList[index].name,present: studentsList[index].present,totalClasses: studentsList[index].totalClasses,attendancePercentage: studentsList[index].percentage.toInt(),usn: studentsList[index].usn,courseId: courseId,)),
             ),
           ],
         ),
