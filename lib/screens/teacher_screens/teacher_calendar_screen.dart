@@ -14,7 +14,7 @@ class TeacherCalenderScreen extends StatefulWidget {
 }
 
 class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
-  String name='';
+  String name='Student name';
   List AttendanceRecords = [];
   int percentage=0;
   int present=0;
@@ -34,6 +34,7 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
   @override
   void initState() {
     Future.delayed(Duration.zero,(){
+      //TODO:Get arguments as map
       List args=ModalRoute.of(context)!.settings.arguments as List;
       getAttendanceData(args[0],args[1]);
       present=args[2];
@@ -47,7 +48,7 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(title: Text(name),),
-      body: Column(
+      body: name=='Student name'?const Center(child: CircularProgressIndicator()):Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
