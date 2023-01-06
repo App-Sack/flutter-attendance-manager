@@ -1,8 +1,8 @@
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../widgets/all_marks_table.dart';
+import '../../widgets/marks_input_field.dart';
 
 class CieScreen extends StatefulWidget {
   static const routeName = '/all-cie-screen';
@@ -145,47 +145,130 @@ class CieInput extends StatelessWidget {
     return Container(
         width: double.infinity,
         child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(5.0),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InputTextBox(txt: "Test 1"),
-                      SizedBox(
-                        width: 35,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "TEST 1",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          InputTextBox(txt: "Test 1"),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: kBlueLightColor,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.edit,
+                                size: 20,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      InputTextBox(txt: "Test 2"),
                       SizedBox(
-                        width: 35,
+                        height: 10,
                       ),
-                      InputTextBox(txt: "Test 3"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "TEST 2",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          InputTextBox(txt: "Test 2"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "TEST 3",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          InputTextBox(txt: "Test 3"),
+                        ],
+                      ),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InputTextBox(txt: "Event 1"),
-                      SizedBox(
-                        width: 35,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "EVENT 1",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 87,
+                          ),
+                          InputTextBox(txt: "Event 1"),
+                        ],
                       ),
-                      InputTextBox(txt: "Event 2"),
                       SizedBox(
-                        width: 35,
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "EVENT 2",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 87,
+                          ),
+                          InputTextBox(txt: "Event 2"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {},
                         child: Container(
                           height: 40,
-                          width: 80,
+                          width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Save",
+                              "Upadate",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -199,33 +282,6 @@ class CieInput extends StatelessWidget {
                 ),
               ],
             )));
-  }
-}
-
-class InputTextBox extends StatelessWidget {
-  final _formKey = GlobalKey<FormBuilderState>();
-  final String txt;
-  InputTextBox({super.key, required this.txt});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      width: 80,
-      child: FormBuilderTextField(
-        key: _formKey,
-        name: txt,
-        decoration: InputDecoration(
-          labelText: txt,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 3.0),
-          ),
-        ),
-      ),
-    );
   }
 }
 
