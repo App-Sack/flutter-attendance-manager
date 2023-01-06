@@ -145,47 +145,130 @@ class CieInput extends StatelessWidget {
     return Container(
         width: double.infinity,
         child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(5.0),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InputTextBox(txt: "Test 1"),
-                      SizedBox(
-                        width: 35,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "TEST 1",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          InputTextBox(txt: "Test 1"),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: kBlueLightColor,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Icon(
+                                Icons.edit,
+                                size: 20,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                      InputTextBox(txt: "Test 2"),
                       SizedBox(
-                        width: 35,
+                        height: 10,
                       ),
-                      InputTextBox(txt: "Test 3"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "TEST 2",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          InputTextBox(txt: "Test 2"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "TEST 3",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          InputTextBox(txt: "Test 3"),
+                        ],
+                      ),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InputTextBox(txt: "Event 1"),
-                      SizedBox(
-                        width: 35,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "EVENT 1",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 87,
+                          ),
+                          InputTextBox(txt: "Event 1"),
+                        ],
                       ),
-                      InputTextBox(txt: "Event 2"),
                       SizedBox(
-                        width: 35,
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "EVENT 2",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 87,
+                          ),
+                          InputTextBox(txt: "Event 2"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {},
                         child: Container(
                           height: 40,
-                          width: 80,
+                          width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Save",
+                              "Upadate",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
