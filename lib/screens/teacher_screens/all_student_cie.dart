@@ -1,6 +1,7 @@
+import 'package:attendance_manager/providers/cie.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../widgets/all_marks_table.dart';
 import '../../widgets/marks_input_field.dart';
 
@@ -15,6 +16,23 @@ class CieScreen extends StatefulWidget {
 
 class _CieScreenState extends State<CieScreen> {
   bool _isExpanded = false;
+  List<CIE> cieList = [];
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      List args = ModalRoute.of(context)!.settings.arguments as List;
+      Provider.of<CieProvider>(context, listen: false)
+          .fetchAndSetCieData(args[0], args[1])
+          .then((value) {
+        cieList = Provider.of<CieProvider>(context, listen: false).getCieData();
+        setState(() {
+          cieList;
+        });
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +72,14 @@ class _CieScreenState extends State<CieScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Student Name",
+                                  cieList[0].student_name,
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  "USN",
+                                  cieList[0].usn,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ],
@@ -159,30 +177,30 @@ class CieInput extends StatelessWidget {
                         children: [
                           Text(
                             "TEST 1",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           SizedBox(
                             width: 100,
                           ),
                           InputTextBox(txt: "Test 1"),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: kBlueLightColor,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Icon(
-                                Icons.edit,
-                                size: 20,
-                              ),
-                            ),
-                          )
+                          // SizedBox(
+                          //   width: 20,
+                          // ),
+                          // GestureDetector(
+                          //   onTap: () {},
+                          //   child: Container(
+                          //     height: 40,
+                          //     width: 40,
+                          //     decoration: BoxDecoration(
+                          //       color: kBlueLightColor,
+                          //       borderRadius: BorderRadius.circular(10.0),
+                          //     ),
+                          //     child: Icon(
+                          //       Icons.edit,
+                          //       size: 20,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                       SizedBox(
@@ -194,7 +212,7 @@ class CieInput extends StatelessWidget {
                         children: [
                           Text(
                             "TEST 2",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           SizedBox(
                             width: 100,
@@ -211,7 +229,7 @@ class CieInput extends StatelessWidget {
                         children: [
                           Text(
                             "TEST 3",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           SizedBox(
                             width: 100,
@@ -233,7 +251,7 @@ class CieInput extends StatelessWidget {
                         children: [
                           Text(
                             "EVENT 1",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           SizedBox(
                             width: 87,
@@ -250,7 +268,7 @@ class CieInput extends StatelessWidget {
                         children: [
                           Text(
                             "EVENT 2",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           SizedBox(
                             width: 87,
@@ -268,7 +286,7 @@ class CieInput extends StatelessWidget {
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Upadate",
+                              "Update",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),

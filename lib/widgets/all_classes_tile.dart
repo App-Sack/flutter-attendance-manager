@@ -78,7 +78,7 @@ class ClassTile extends StatelessWidget {
                           borderRadius: 5.0,
                           onPressed: () {
                             Navigator.of(context)
-                                .pushNamed(CieScreen.routeName);
+                                .pushNamed(CieScreen.routeName,arguments: [section,courseId]);
                           },
                         ),
                       ],

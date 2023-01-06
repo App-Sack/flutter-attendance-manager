@@ -16,6 +16,7 @@ class InputTextBox extends StatelessWidget {
         name: txt,
         decoration: InputDecoration(
           labelText: txt,
+          labelStyle: TextStyle(color: Colors.white),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blue, width: 1.0),
           ),
