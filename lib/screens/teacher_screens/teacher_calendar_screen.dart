@@ -120,7 +120,7 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Prsent:$present",
+                                      "Present:$present",
                                       //"Present: ${subject.present}",
                                       style: TextStyle(
                                           fontSize: 26, color: Colors.black45),

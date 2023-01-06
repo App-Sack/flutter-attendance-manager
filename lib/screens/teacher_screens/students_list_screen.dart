@@ -14,6 +14,7 @@ class StudentsListScreen extends StatefulWidget {
 
 class _StudentsListScreenState extends State<StudentsListScreen> {
   late String courseId;
+  int numberOfClasses =1;
   List<Student> studentsList=[];
   @override
   void initState() {
@@ -37,6 +38,30 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
         context: context,
         builder: (context) => AlertDialog(
           title: Text("Number of classes"),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState){
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  NumberOfClassButton(icon: Icons.remove,onPressed: (){
+                    if(numberOfClasses>1){
+                      setState(() {
+                        --numberOfClasses;
+                      });
+                    }
+                  },),
+                  Text(numberOfClasses.toString()),
+                  NumberOfClassButton(icon: Icons.add,onPressed: (){
+                    if(numberOfClasses<3){
+                      setState(() {
+                        ++numberOfClasses;
+                      });
+                    }
+                  },),
+                ],
+              );
+            }
+          ),
           actions: [
             AlertBoxButton(
               title: "Cancel",
@@ -50,7 +75,7 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
               colour: Colors.green,
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName,arguments: studentsList);
+                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName,arguments: [studentsList,courseId,numberOfClasses]);
               },
             )
           ],
@@ -85,6 +110,22 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class NumberOfClassButton extends StatelessWidget {
+  final IconData icon;
+  final Function()? onPressed;
+  const NumberOfClassButton({super.key, required this.icon, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: CircleAvatar(
+        child: Icon(icon),
       ),
     );
   }
