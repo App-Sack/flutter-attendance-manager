@@ -24,14 +24,15 @@ class CIE {
 }
 
 class CieProvider with ChangeNotifier {
-
-  List<CIE> _cieData = [];
+  List<CIE> cieData = [];
   Future fetchAndSetCieData(String section, String courseId) async {
+    cieData = [];
     var url = Uri.parse(
         "https://sjce12345.pythonanywhere.com/api/cie/get-students-in-section-cie/$section/$courseId/");
     var data = await http.get(url);
     final extractedData = json.decode(data.body);
-    final course_id = extractedData["course_id"];
+    print(extractedData);
+    String course_id = extractedData["course_id"];
     final studentsData = extractedData["students_data"];
     for (var student in studentsData) {
       CIE newCie = CIE(
@@ -43,12 +44,11 @@ class CieProvider with ChangeNotifier {
           e3: student["e3"],
           e4: student["e4"],
           e5: student["e5"]);
-      _cieData.add(newCie);
+      cieData.add(newCie);
     }
-    
   }
 
-  List<CIE> getCieData() {
-      return [..._cieData];
-    }
+  List<CIE> get CieData {
+    return [...cieData];
+  }
 }

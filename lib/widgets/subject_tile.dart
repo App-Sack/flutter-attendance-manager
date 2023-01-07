@@ -133,7 +133,15 @@ class _SubjectTileState extends State<SubjectTile> {
                 child: Center(
                     child: Column(
                   children: [
-                    if (_isExpanded) CieTable(),
+                    if (_isExpanded)
+                      CieTable(
+                        e1: "12",
+                        e2: "12",
+                        e3: "12",
+                        e4: "12",
+                        e5: "12",
+                        avg: 60,
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

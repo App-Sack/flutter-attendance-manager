@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CieTable extends StatelessWidget {
-  const CieTable({
-    Key? key,
-  }) : super(key: key);
+  String e1;
+  String e2;
+  String e3;
+  String e4;
+  String e5;
+  int avg;
+  CieTable(
+      {required this.e1,
+      required this.e2,
+      required this.e3,
+      required this.e4,
+      required this.e5,
+      required this.avg});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +33,12 @@ class CieTable extends StatelessWidget {
                 TableData(data: "AVG"),
               ]),
               TableRow(children: [
-                TableData(data: "12"),
-                TableData(data: "12"),
-                TableData(data: "12"),
-                TableData(data: "12"),
-                TableData(data: "12"),
-                TableData(data: "60")
+                TableData(data: e1),
+                TableData(data: e2),
+                TableData(data: e3),
+                TableData(data: e4),
+                TableData(data: e5),
+                TableData(data: avg.toString()),
               ])
             ],
           ),
