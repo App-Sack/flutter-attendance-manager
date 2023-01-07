@@ -19,6 +19,7 @@ class AttendanceData {
 class AttendanceDataProvider with ChangeNotifier {
   List<AttendanceData> _attendanceData = [];
   Future fetchAndSetAttendanceData(String usn, String courseId) async {
+    _attendanceData=[];
     var url = Uri.parse(
         "https://sjce12345.pythonanywhere.com/api/student/get-calendar-attendance/$usn/$courseId/");
     var data = await http.get(url);
@@ -30,6 +31,7 @@ class AttendanceDataProvider with ChangeNotifier {
           isPresent: element['isPresent']);
       _attendanceData.add(newAttendanceData);
     });
+    notifyListeners();
   }
 
   List<dynamic> getAttendanceData() {

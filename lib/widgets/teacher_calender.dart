@@ -97,7 +97,6 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        print("clear all");
                         Provider.of<AttendanceDataProvider>(context,listen: false).clearAttendance(date,widget.usn,widget.courseId);
                       }
                           //subject.clearAllEventsOnDay(date);
