@@ -21,6 +21,8 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
   int percentage = 0;
   int present = 0;
   int totalClasses = 0;
+  String usn='';
+  String courseId='';
   //TODO:Fetch required attendance from the server
   int requiredAttendance = 75;
 
@@ -49,6 +51,8 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
           attendanceRecords;
         });
       });
+      usn=args[0];
+      courseId=args[1];
       present = args[2];
       totalClasses = args[3];
       percentage = args[4];
@@ -156,6 +160,8 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   child: TeacherCalendar(
                     attendanceData: attendanceRecords,
+                    usn: usn,
+                    courseId: courseId,
                   ),
                 ),
               ],

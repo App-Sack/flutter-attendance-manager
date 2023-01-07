@@ -1,11 +1,14 @@
+import 'package:attendance_manager/providers/attendance_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TeacherCalendar extends StatefulWidget {
   final List<dynamic> attendanceData;
-
-  const TeacherCalendar({super.key, required this.attendanceData});
+  final String usn;
+  final String courseId;
+  const TeacherCalendar({super.key, required this.attendanceData,required this.courseId,required this.usn});
 
   @override
   State<TeacherCalendar> createState() => _TeacherCalendarState();
@@ -95,6 +98,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                     onPressed: () {
                       setState(() {
                         print("clear all");
+                        Provider.of<AttendanceDataProvider>(context,listen: false).clearAttendance(date,widget.usn,widget.courseId);
                       }
                           //subject.clearAllEventsOnDay(date);
 
