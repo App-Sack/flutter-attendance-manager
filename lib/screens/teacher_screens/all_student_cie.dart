@@ -252,15 +252,25 @@ class CieInput extends StatefulWidget {
 
 class _CieInputState extends State<CieInput> {
   bool _isLoading = false;
+  TextEditingController test1Controller = TextEditingController();
+  TextEditingController test2Controller = TextEditingController();
+  TextEditingController test3Controller = TextEditingController();
+  TextEditingController test4Controller = TextEditingController();
+  TextEditingController test5Controller = TextEditingController();
+  @override
+  void dispose() {
+    test1Controller.dispose();
+    test2Controller.dispose();
+    test3Controller.dispose();
+    test4Controller.dispose();
+    test5Controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     List args = ModalRoute.of(context)!.settings.arguments as List;
-    TextEditingController test1Controller = TextEditingController();
-    TextEditingController test2Controller = TextEditingController();
-    TextEditingController test3Controller = TextEditingController();
-    TextEditingController event1Controller = TextEditingController();
-    TextEditingController event2Controller = TextEditingController();
+
     return Container(
         width: double.infinity,
         child: Padding(
@@ -300,14 +310,14 @@ class _CieInputState extends State<CieInput> {
                     children: [
                       CieEntryTile(
                         data: "Event 4",
-                        controller: event1Controller,
+                        controller: test4Controller,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       CieEntryTile(
                         data: "Event 5",
-                        controller: event2Controller,
+                        controller: test5Controller,
                       ),
                       SizedBox(
                         height: 10,
@@ -322,10 +332,10 @@ class _CieInputState extends State<CieInput> {
                             "usn": widget.usn,
                             "course_id": args[1],
                             "e1": test1Controller.text,
-                            "e2": event1Controller.text,
-                            "e3": test2Controller.text,
-                            "e4": event2Controller.text,
-                            "e5": test3Controller.text,
+                            "e2": test2Controller.text,
+                            "e3": test3Controller.text,
+                            "e4": test4Controller.text,
+                            "e5": test5Controller.text,
                           };
                           Provider.of<CieProvider>(context, listen: false)
                               .updateCie(dataToSend)
