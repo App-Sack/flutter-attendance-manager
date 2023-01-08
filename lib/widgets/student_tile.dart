@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class StudentTile extends StatelessWidget {
+  final int rollNo;
   final String usn;
   final String name;
   final int attendancePercentage;
@@ -18,7 +19,9 @@ class StudentTile extends StatelessWidget {
       required this.usn,
       required this.courseId,
       required this.present,
-      required this.totalClasses});
+      required this.totalClasses,
+      required this.rollNo
+      });
   int requiredAttendance = 75;
   @override
   Widget build(BuildContext context) {
@@ -42,27 +45,47 @@ class StudentTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                name,
-                style: TextStyle(fontSize: 20),
+              Container(
+                margin: EdgeInsets.only(left: 5,right: 15),
+                decoration: BoxDecoration(
+                  color: kBlueLightColor,
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:12,vertical: 8 ),
+                  child: Text(
+                    rollNo.toString()
+                  ),
+                ),
               ),
-              CircularStepProgressIndicator(
-                width: 50,
-                height: 50,
-                totalSteps: 10,
-                stepSize: 4,
-                currentStep: (attendancePercentage / 10).toInt(),
-                selectedColor:
-                    attendancePercentage / 10 > requiredAttendance / 10
-                        ? Colors.lightGreen
-                        : Colors.red,
-                unselectedColor: Colors.white,
-                child: Center(
-                  child: Text("$attendancePercentage%"),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                    name,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                    CircularStepProgressIndicator(
+                      width: 50,
+                      height: 50,
+                      totalSteps: 10,
+                      stepSize: 4,
+                      currentStep: (attendancePercentage / 10).toInt(),
+                      selectedColor:
+                      attendancePercentage / 10 > requiredAttendance / 10
+                          ? Colors.lightGreen
+                          : Colors.red,
+                      unselectedColor: Colors.white,
+                      child: Center(
+                        child: Text("$attendancePercentage%"),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

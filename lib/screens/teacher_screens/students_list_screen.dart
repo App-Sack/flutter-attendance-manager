@@ -106,7 +106,7 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: studentsList.length, itemBuilder: (context, index) => StudentTile(name: studentsList[index].name,present: studentsList[index].present,totalClasses: studentsList[index].totalClasses,attendancePercentage: studentsList[index].percentage.toInt(),usn: studentsList[index].usn,courseId: courseId,)),
+                  itemCount: studentsList.length, itemBuilder: (context, index) => StudentTile(rollNo:index+1,name: studentsList[index].name,present: studentsList[index].present,totalClasses: studentsList[index].totalClasses,attendancePercentage: studentsList[index].percentage.toInt(),usn: studentsList[index].usn,courseId: courseId,)),
             ),
           ],
         ),
