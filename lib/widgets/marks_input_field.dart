@@ -4,7 +4,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class InputTextBox extends StatelessWidget {
   final _formKey = GlobalKey<FormBuilderState>();
   final String txt;
-  InputTextBox({super.key, required this.txt});
+  TextEditingController controller;
+  InputTextBox({super.key, required this.txt,required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class InputTextBox extends StatelessWidget {
       width: 80,
       child: FormBuilderTextField(
         key: _formKey,
+        controller: controller,
         name: txt,
         decoration: InputDecoration(
           labelText: txt,
