@@ -40,14 +40,10 @@ class AttendanceDataProvider with ChangeNotifier {
 
   void clearAttendance(String deleteDate,String usn,String courseId){
     _attendanceData.forEach((element) async {
-      String parseDate=DateFormat('dd-MM-yyyy').format(DateTime.parse(element.date));
-
-      //Compare dates in the form dd-MM-yyyy
+      String parseDate=DateFormat('yyyy-MM-dd').format(DateTime.parse(element.date));
       if(parseDate==deleteDate){
         SharedPreferences sp=await SharedPreferences.getInstance();
         String? token=sp.getString('token');
-        //To send the date in the format yyyy-MM-dd
-        parseDate=DateFormat('yyyy-MM-dd').format(DateTime.parse(element.date));
           var url=Uri.parse("https://sjce12345.pythonanywhere.com/api/teacher/reset-attendance-on-date");
           var response=await http.post(url,body:
             json.encode({
@@ -64,5 +60,21 @@ class AttendanceDataProvider with ChangeNotifier {
         }
       }
     });
+  }
+
+  void markAttendanceForSingleDay(String date,String usn,String courseId,bool attendanceStatus) async{
+    SharedPreferences sp=await SharedPreferences.getInstance();
+    String? token=sp.getString('token');
+    var url=Uri.parse("https://sjce12345.pythonanywhere.com/api/teacher/add-single-attendance-on-date");
+    var response=await http.post(url,body:
+    json.encode({
+      "course_id":courseId,"usn":usn,"date":date,"is_present":attendanceStatus
+    })
+        ,headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.acceptHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Token $token',
+        });
+    print(response.body);
   }
 }

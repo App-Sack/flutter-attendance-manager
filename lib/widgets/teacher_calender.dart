@@ -19,7 +19,6 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
     List events = [];
     //final subject = Provider.of<Subjects>(context).findById(widget.subId);
     final String thisDay = DateFormat('dd-MM-yyyy').format(day);
-
     widget.attendanceData.forEach((record) {
       DateTime recordDate = DateTime.parse(record.date);
       if (DateFormat('dd-MM-yyyy').format(recordDate) == thisDay &&
@@ -50,7 +49,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
         context: context,
         builder: (_) {
           //final subject = Provider.of<Subjects>(context).findById(widget.subId);
-          final date = DateFormat('dd-MM-yyyy').format(d);
+          final date = DateFormat('yyyy-MM-dd').format(d);
           return AlertDialog(
             title: Text(DateFormat('EE, MMM d').format(d)),
             content: Text("Set/Reset Attendance for subject name"),
@@ -65,6 +64,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                       onPressed: () {
                         setState(() {
                           print("Present");
+                          Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, true);
                           //subject.addPresentEvent(date);
                         });
                         Navigator.of(context).pop();
@@ -82,6 +82,7 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                     onPressed: () {
                       setState(() {
                         print("absent");
+                        Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, false);
                         //subject.addAbsentEvent(date);
                       });
                       Navigator.of(context).pop();
