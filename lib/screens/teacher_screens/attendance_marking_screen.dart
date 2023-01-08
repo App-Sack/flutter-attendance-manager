@@ -65,57 +65,54 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
       appBar: AppBar(
         title:const Text("Mark Attendance"),
       ),
-      body: studentsList.isEmpty?const Center(child: CircularProgressIndicator(),):Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-                child: ListView.builder(
-                    itemCount: studentsList.length,
-                    itemBuilder: (context, index) => AttendanceTile(attendanceObj:attendance[index],name: studentsList[index].name,))),
-            GestureDetector(
-              onTap: (){
+      body: studentsList.isEmpty?const Center(child: CircularProgressIndicator(),):Column(
+        children: [
+          Expanded(
+              child: ListView.builder(
+                  itemCount: studentsList.length,
+                  itemBuilder: (context, index) => AttendanceTile(rollNo:index+1,attendanceObj:attendance[index],name: studentsList[index].name,))),
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                print("object");
+                _isLoading=true;
+              });
+              Map<String,dynamic>dataToSend={
+                "course":courseId,
+                "no_of_classes":numberOfClasses,
+                "students":[]
+              };
+              attendance.forEach((element) {
+                dataToSend['students'].add({
+                  "studentUsn":element.usn,
+                  "is_present":element.status
+                });
+              });
+              markAttendance(dataToSend).then((message){
+                if(message=="Successful"){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Attendance marked")));
+                  Navigator.pop(context);
+                }
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+                }
                 setState(() {
-                  print("object");
-                  _isLoading=true;
+                  _isLoading=false;
                 });
-                Map<String,dynamic>dataToSend={
-                  "course":courseId,
-                  "no_of_classes":numberOfClasses,
-                  "students":[]
-                };
-                attendance.forEach((element) {
-                  dataToSend['students'].add({
-                    "studentUsn":element.usn,
-                    "is_present":element.status
-                  });
-                });
-                markAttendance(dataToSend).then((message){
-                  if(message=="Successful"){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Attendance marked")));
-                    Navigator.pop(context);
-                  }
-                  else{
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-                  }
-                  setState(() {
-                    _isLoading=false;
-                  });
-                });
-              },
-              child: Container(
-                margin: const EdgeInsets.only(top: 2),
-                decoration: const BoxDecoration(color: Colors.red),
-                child:Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: _isLoading?const Center(child: CircularProgressIndicator()):Text("Submit attendance"),
-                  ),
+              });
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 2),
+              decoration: const BoxDecoration(color: Colors.red),
+              child:Center(
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: _isLoading?const Center(child: CircularProgressIndicator()):Text("Submit attendance"),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -124,7 +121,8 @@ class _AttendanceMarkingScreenState extends State<AttendanceMarkingScreen> {
 class AttendanceTile extends StatefulWidget {
   final AttendanceStatus attendanceObj;
   final String name;
-  const AttendanceTile({super.key, required this.attendanceObj,required this.name});
+  final int rollNo;
+  const AttendanceTile({super.key, required this.attendanceObj,required this.name,required this.rollNo});
 
   @override
   State<AttendanceTile> createState() => _AttendanceTileState();
@@ -134,17 +132,30 @@ class _AttendanceTileState extends State<AttendanceTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: [
-          Checkbox(
-              value: widget.attendanceObj.status,
-              onChanged: (value) {
-                setState(() {
-                  widget.attendanceObj.status = value!;
-                });
-              }),
-          Text(widget.name),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          children: [
+            Text(
+                "${widget.rollNo.toString()} . "
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(widget.name),
+                  Checkbox(
+                      value: widget.attendanceObj.status,
+                      onChanged: (value) {
+                        setState(() {
+                          widget.attendanceObj.status = value!;
+                        });
+                      }),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
