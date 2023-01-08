@@ -6,3 +6,4 @@ const Color kBlueColor = Color(0xfff004b6b);
 const Color kOrangeLightColor = Color(0xffffbd0bd);
 const Color kOrangeDarkColor = Color(0xfffaa4618);
 const Color kBlueLightColor = Color(0xfffdbe5ea);
+const Color kTTBlueColor = Color(0xfff326e88);

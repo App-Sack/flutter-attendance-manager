@@ -2,6 +2,7 @@ import 'package:attendance_manager/providers/cie.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../widgets/all_marks_table.dart';
 import '../../widgets/marks_input_field.dart';
 
@@ -76,7 +77,7 @@ class _CieScreenState extends State<CieScreen> {
                         e5: cieList[index].e5 == null
                             ? "-"
                             : cieList[index].e5.toString(),
-                        avg: (((cieList[index].e1 ?? 0)+ 
+                        avg: (((cieList[index].e1 ?? 0) +
                                 (cieList[index].e2 ?? 0) +
                                 (cieList[index].e3 ?? 0) +
                                 (cieList[index].e4 ?? 0) +
@@ -252,72 +253,15 @@ class CieInput extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "TEST 1",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 100,
-                          ),
-                          InputTextBox(txt: "Test 1"),
-                          // SizedBox(
-                          //   width: 20,
-                          // ),
-                          // GestureDetector(
-                          //   onTap: () {},
-                          //   child: Container(
-                          //     height: 40,
-                          //     width: 40,
-                          //     decoration: BoxDecoration(
-                          //       color: kBlueLightColor,
-                          //       borderRadius: BorderRadius.circular(10.0),
-                          //     ),
-                          //     child: Icon(
-                          //       Icons.edit,
-                          //       size: 20,
-                          //     ),
-                          //   ),
-                          // )
-                        ],
-                      ),
+                      CieEntryTile(data: "Test 1"),
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "TEST 2",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 100,
-                          ),
-                          InputTextBox(txt: "Test 2"),
-                        ],
-                      ),
+                      CieEntryTile(data: "Test 2"),
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "TEST 3",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 100,
-                          ),
-                          InputTextBox(txt: "Test 3"),
-                        ],
-                      ),
+                      CieEntryTile(data: "Test 3"),
                     ],
                   ),
                 ),
@@ -326,37 +270,11 @@ class CieInput extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "EVENT 1",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 87,
-                          ),
-                          InputTextBox(txt: "Event 1"),
-                        ],
-                      ),
+                      CieEntryTile(data: "Event 1"),
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "EVENT 2",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 87,
-                          ),
-                          InputTextBox(txt: "Event 2"),
-                        ],
-                      ),
+                      CieEntryTile(data: "Event 2"),
                       SizedBox(
                         height: 10,
                       ),
@@ -381,6 +299,47 @@ class CieInput extends StatelessWidget {
                 ),
               ],
             )));
+  }
+}
+
+class CieEntryTile extends StatelessWidget {
+  CieEntryTile({required this.data});
+  String data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          data,
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
+        SizedBox(
+          width: 100,
+        ),
+        InputTextBox(txt: data),
+        SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: kBlueLightColor,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Icon(
+              Icons.edit,
+              size: 20,
+            ),
+          ),
+        )
+      ],
+    );
   }
 }
 
