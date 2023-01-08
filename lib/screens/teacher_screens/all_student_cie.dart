@@ -87,7 +87,7 @@ class _CieScreenState extends State<CieScreen> {
                                 (cieList[index].e3 ?? 0) +
                                 (cieList[index].e4 ?? 0) +
                                 (cieList[index].e5 ?? 0)) ~/
-                            5));
+                            2));
                   }))),
     );
   }
@@ -273,21 +273,21 @@ class _CieInputState extends State<CieInput> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CieEntryTile(
-                        data: "Test 1",
+                        data: "Event 1",
                         controller: test1Controller,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       CieEntryTile(
-                        data: "Test 2",
+                        data: "Event 2",
                         controller: test2Controller,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       CieEntryTile(
-                        data: "Test 3",
+                        data: "Event 3",
                         controller: test3Controller,
                       ),
                     ],
@@ -299,14 +299,14 @@ class _CieInputState extends State<CieInput> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CieEntryTile(
-                        data: "Event 1",
+                        data: "Event 4",
                         controller: event1Controller,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       CieEntryTile(
-                        data: "Event 2",
+                        data: "Event 5",
                         controller: event2Controller,
                       ),
                       SizedBox(
@@ -327,18 +327,16 @@ class _CieInputState extends State<CieInput> {
                             "e4": event2Controller.text,
                             "e5": test3Controller.text,
                           };
-                          setState(() {
-                            Provider.of<CieProvider>(context, listen: false)
-                                .updateCie(dataToSend)
-                                .then((message) {
-                              if (message == "Successful") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("CIE updated.")));
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(message)));
-                              }
-                            });
+                          Provider.of<CieProvider>(context, listen: false)
+                              .updateCie(dataToSend)
+                              .then((message) {
+                            if (message == "Successful") {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("CIE updated.")));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(message)));
+                            }
                           });
 
                           setState(() {
