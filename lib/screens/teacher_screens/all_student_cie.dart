@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:attendance_manager/providers/cie.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/all_marks_table.dart';
 import '../../widgets/marks_input_field.dart';
@@ -18,8 +22,6 @@ class CieScreen extends StatefulWidget {
 class _CieScreenState extends State<CieScreen> {
   bool _isExpanded = false;
   List<CIE> cieList = [];
-
-  void loadTheData() {}
 
   @override
   void didChangeDependencies() {
@@ -51,6 +53,9 @@ class _CieScreenState extends State<CieScreen> {
       appBar: AppBar(
         title: Text("CIE"),
         backgroundColor: kBlueColor,
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
+        ],
       ),
       body: cieList.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -193,7 +198,9 @@ class _CieTileState extends State<CieTile> {
                                       e5: widget.e5,
                                       avg: widget.avg,
                                     ),
-                                    CieInput(),
+                                    CieInput(
+                                      usn: widget.usn,
+                                    ),
                                   ],
                                 ),
                               Row(
@@ -235,13 +242,25 @@ class _CieTileState extends State<CieTile> {
   }
 }
 
-class CieInput extends StatelessWidget {
-  const CieInput({
-    Key? key,
-  }) : super(key: key);
+class CieInput extends StatefulWidget {
+  String usn;
+  CieInput({super.key, required this.usn});
+
+  @override
+  State<CieInput> createState() => _CieInputState();
+}
+
+class _CieInputState extends State<CieInput> {
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    List args = ModalRoute.of(context)!.settings.arguments as List;
+    TextEditingController test1Controller = TextEditingController();
+    TextEditingController test2Controller = TextEditingController();
+    TextEditingController test3Controller = TextEditingController();
+    TextEditingController event1Controller = TextEditingController();
+    TextEditingController event2Controller = TextEditingController();
     return Container(
         width: double.infinity,
         child: Padding(
@@ -253,15 +272,24 @@ class CieInput extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CieEntryTile(data: "Test 1"),
+                      CieEntryTile(
+                        data: "Test 1",
+                        controller: test1Controller,
+                      ),
                       SizedBox(
                         height: 10,
                       ),
-                      CieEntryTile(data: "Test 2"),
+                      CieEntryTile(
+                        data: "Test 2",
+                        controller: test2Controller,
+                      ),
                       SizedBox(
                         height: 10,
                       ),
-                      CieEntryTile(data: "Test 3"),
+                      CieEntryTile(
+                        data: "Test 3",
+                        controller: test3Controller,
+                      ),
                     ],
                   ),
                 ),
@@ -270,16 +298,54 @@ class CieInput extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CieEntryTile(data: "Event 1"),
+                      CieEntryTile(
+                        data: "Event 1",
+                        controller: event1Controller,
+                      ),
                       SizedBox(
                         height: 10,
                       ),
-                      CieEntryTile(data: "Event 2"),
+                      CieEntryTile(
+                        data: "Event 2",
+                        controller: event2Controller,
+                      ),
                       SizedBox(
                         height: 10,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            print("Loading");
+                            _isLoading = true;
+                          });
+                          Map<String, dynamic> dataToSend = {
+                            "usn": widget.usn,
+                            "course_id": args[1],
+                            "e1": test1Controller.text,
+                            "e2": event1Controller.text,
+                            "e3": test2Controller.text,
+                            "e4": event2Controller.text,
+                            "e5": test3Controller.text,
+                          };
+                          setState(() {
+                            Provider.of<CieProvider>(context, listen: false)
+                                .updateCie(dataToSend)
+                                .then((message) {
+                              if (message == "Successful") {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("CIE updated.")));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(message)));
+                              }
+                            });
+                          });
+
+                          setState(() {
+                            print("Done!");
+                            _isLoading = false;
+                          });
+                        },
                         child: Container(
                           height: 40,
                           width: double.infinity,
@@ -303,8 +369,9 @@ class CieInput extends StatelessWidget {
 }
 
 class CieEntryTile extends StatelessWidget {
-  CieEntryTile({required this.data});
+  CieEntryTile({required this.data, required this.controller});
   String data;
+  TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -319,7 +386,10 @@ class CieEntryTile extends StatelessWidget {
         SizedBox(
           width: 100,
         ),
-        InputTextBox(txt: data),
+        InputTextBox(
+          txt: data,
+          controller: controller,
+        ),
         SizedBox(
           width: 20,
         ),

@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CIE {
   final String course_id;
@@ -50,5 +54,26 @@ class CieProvider with ChangeNotifier {
 
   List<CIE> get CieData {
     return [...cieData];
+  }
+
+  Future<String> updateCie(Map<String, dynamic> dataToSend) async {
+    String message = "";
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String? token = sp.getString('token');
+    var url = Uri.parse(
+        "http://sjce12345.pythonanywhere.com/api/cie/update-student-cie/");
+    var response =
+        await http.post(url, body: json.encode(dataToSend), headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.acceptHeader: 'application/json',
+      HttpHeaders.authorizationHeader: 'Token $token',
+    });
+    message = json.decode(response.body);
+    if (message.contains("Successful")) {
+      notifyListeners();
+      return "Successful";
+    } else {
+      return message;
+    }
   }
 }
