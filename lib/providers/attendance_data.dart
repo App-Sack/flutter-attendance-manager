@@ -49,9 +49,10 @@ class AttendanceDataProvider with ChangeNotifier {
         //To send the date in the format yyyy-MM-dd
         parseDate=DateFormat('yyyy-MM-dd').format(DateTime.parse(element.date));
           var url=Uri.parse("https://sjce12345.pythonanywhere.com/api/teacher/reset-attendance-on-date");
-          Map<String,dynamic> dataToSend={"course_id":courseId,"usn":usn,"date":parseDate};
           var response=await http.post(url,body:
-            json.encode(dataToSend)
+            json.encode({
+              "course_id":courseId,"usn":usn,"date":parseDate
+            })
           ,headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
             HttpHeaders.acceptHeader: 'application/json',
