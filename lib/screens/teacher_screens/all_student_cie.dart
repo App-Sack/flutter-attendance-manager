@@ -20,7 +20,6 @@ class CieScreen extends StatefulWidget {
 }
 
 class _CieScreenState extends State<CieScreen> {
-  bool _isExpanded = false;
   List<CIE> cieList = [];
 
   @override
@@ -124,119 +123,107 @@ class _CieTileState extends State<CieTile> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: kBlueColor.withOpacity(0.7),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xff023047).withOpacity(0.87),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xff023047),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.name,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                widget.usn,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ],
+                          Text(
+                            widget.name,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            widget.usn,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
-                      const Divider(
-                        color: Colors.white,
-                        thickness: 2,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isExpanded = _isExpanded ? false : true;
-                          });
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: kBlueColor.withOpacity(0.7),
-                              borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(12),
-                                  bottomLeft: Radius.circular(12))),
-                          child: Center(
-                              child: Column(
-                            children: [
-                              if (_isExpanded)
-                                Column(
-                                  children: [
-                                    CieTable(
-                                      e1: widget.e1,
-                                      e2: widget.e2,
-                                      e3: widget.e3,
-                                      e4: widget.e4,
-                                      e5: widget.e5,
-                                      avg: widget.avg,
-                                    ),
-                                    CieInput(
-                                      usn: widget.usn,
-                                    ),
-                                  ],
-                                ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "CIE",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  _isExpanded
-                                      ? const Icon(
-                                          Icons.keyboard_arrow_up,
-                                          color: Colors.white70,
-                                        )
-                                      : const Icon(
-                                          Icons.keyboard_arrow_down,
-                                          color: Colors.white70,
-                                        ),
-                                ],
-                              ),
-                            ],
-                          )),
-                        ),
-                      )
                     ],
                   ),
-                ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 2,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _isExpanded = _isExpanded ? false : true;
+                      });
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: kBlueColor.withOpacity(0.7),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10))),
+                      child: Center(
+                          child: Column(
+                        children: [
+                          if (_isExpanded)
+                            Column(
+                              children: [
+                                CieTable(
+                                  e1: widget.e1,
+                                  e2: widget.e2,
+                                  e3: widget.e3,
+                                  e4: widget.e4,
+                                  e5: widget.e5,
+                                  avg: widget.avg,
+                                ),
+                                CieInput(
+                                  usn: widget.usn,
+                                ),
+                              ],
+                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "CIE",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              _isExpanded
+                                  ? const Icon(
+                                      Icons.keyboard_arrow_up,
+                                      color: Colors.white70,
+                                    )
+                                  : const Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: Colors.white70,
+                                    ),
+                            ],
+                          ),
+                        ],
+                      )),
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
