@@ -20,75 +20,88 @@ class StudentTile extends StatelessWidget {
       required this.courseId,
       required this.present,
       required this.totalClasses,
-      required this.rollNo
-      });
+      required this.rollNo});
   int requiredAttendance = 75;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, TeacherCalenderScreen.routeName,
-            arguments: [
-              usn,
-              courseId,
-              present,
-              totalClasses,
-              attendancePercentage,
-              name
-            ]);
-      },
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(top: 10),
-        decoration: BoxDecoration(
-          color: kTTBlueColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-          child: Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: 5,right: 15),
-                decoration: BoxDecoration(
-                  color: kBlueLightColor,
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:12,vertical: 8 ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, TeacherCalenderScreen.routeName,
+              arguments: [
+                usn,
+                courseId,
+                present,
+                totalClasses,
+                attendancePercentage,
+                name
+              ]);
+        },
+        child: Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            color: kTTBlueColor,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: kBlueLightColor,
                   child: Text(
-                    rollNo.toString()
+                    rollNo.toString(),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                    name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                    CircularStepProgressIndicator(
-                      width: 50,
-                      height: 50,
-                      totalSteps: 10,
-                      stepSize: 4,
-                      currentStep: (attendancePercentage / 10).toInt(),
-                      selectedColor:
-                      attendancePercentage / 10 > requiredAttendance / 10
-                          ? Colors.lightGreen
-                          : Colors.red,
-                      unselectedColor: Colors.white,
-                      child: Center(
-                        child: Text("$attendancePercentage%"),
+                SizedBox(
+                  width: 10,
+                ),
+                // Container(
+                //   margin: EdgeInsets.only(left: 5, right: 15),
+                //   decoration: BoxDecoration(
+                //       color: kBlueLightColor,
+                //       borderRadius: BorderRadius.circular(4)),
+                //   child: Padding(
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                //     child: Text(rollNo.toString()),
+                //   ),
+                // ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        name,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
-                    ),
-                  ],
+                      CircularStepProgressIndicator(
+                        width: 50,
+                        height: 50,
+                        totalSteps: 10,
+                        stepSize: 4,
+                        currentStep: (attendancePercentage / 10).toInt(),
+                        selectedColor:
+                            attendancePercentage / 10 > requiredAttendance / 10
+                                ? Colors.lightGreen
+                                : Colors.red,
+                        unselectedColor: Colors.white,
+                        child: Center(
+                          child: Text(
+                            "$attendancePercentage%",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

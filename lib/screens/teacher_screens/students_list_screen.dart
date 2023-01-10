@@ -1,5 +1,6 @@
 import 'package:attendance_manager/providers/student.dart';
 import 'package:attendance_manager/screens/teacher_screens/attendance_marking_screen.dart';
+import 'package:attendance_manager/utils/colors.dart';
 import 'package:attendance_manager/widgets/student_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,23 +15,29 @@ class StudentsListScreen extends StatefulWidget {
 
 class _StudentsListScreenState extends State<StudentsListScreen> {
   late String courseId;
-  int numberOfClasses =1;
-  List<Student> studentsList=[];
+  int numberOfClasses = 1;
+  String subjectName = "Subject Name";
+  List<Student> studentsList = [];
   @override
   void initState() {
-
-    Future.delayed(Duration.zero,(){
-      List data=ModalRoute.of(context)!.settings.arguments as List;
-      courseId=data[1];
-      Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents(data[0],courseId).then((value){
-        studentsList=Provider.of<StudentProvider>(context,listen: false).studentsList;
+    Future.delayed(Duration.zero, () {
+      List data = ModalRoute.of(context)!.settings.arguments as List;
+      courseId = data[1];
+      subjectName = data[2];
+      Provider.of<StudentProvider>(context, listen: false)
+          .fetchAndSetStudents(data[0], courseId)
+          .then((value) {
+        studentsList =
+            Provider.of<StudentProvider>(context, listen: false).studentsList;
         setState(() {
+          subjectName;
           studentsList;
         });
       });
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     Future DailogBox() {
@@ -39,29 +46,34 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
         builder: (context) => AlertDialog(
           title: Text("Number of classes"),
           content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState){
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  NumberOfClassButton(icon: Icons.remove,onPressed: (){
-                    if(numberOfClasses>1){
+              builder: (BuildContext context, StateSetter setState) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                NumberOfClassButton(
+                  icon: Icons.remove,
+                  onPressed: () {
+                    if (numberOfClasses > 1) {
                       setState(() {
                         --numberOfClasses;
                       });
                     }
-                  },),
-                  Text(numberOfClasses.toString()),
-                  NumberOfClassButton(icon: Icons.add,onPressed: (){
-                    if(numberOfClasses<3){
+                  },
+                ),
+                Text(numberOfClasses.toString()),
+                NumberOfClassButton(
+                  icon: Icons.add,
+                  onPressed: () {
+                    if (numberOfClasses < 3) {
                       setState(() {
                         ++numberOfClasses;
                       });
                     }
-                  },),
-                ],
-              );
-            }
-          ),
+                  },
+                ),
+              ],
+            );
+          }),
           actions: [
             AlertBoxButton(
               title: "Cancel",
@@ -75,42 +87,66 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
               colour: Colors.green,
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName,arguments: [studentsList,courseId,numberOfClasses]);
+                Navigator.pushNamed(context, AttendanceMarkingScreen.routeName,
+                    arguments: [studentsList, courseId, numberOfClasses]);
               },
             )
           ],
         ),
       );
     }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sample"),
+        title: Text(subjectName),
+        backgroundColor: kOrangeColor,
       ),
-      body: studentsList.isEmpty?const Center(child: CircularProgressIndicator()):Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            InkWell(
-              onTap: DailogBox,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(10),
+      body: studentsList.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                SizedBox(
+                  height: 12,
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(child: Text("Mark today\'s attendance")),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: studentsList.length,
+                      itemBuilder: (context, index) => StudentTile(
+                            rollNo: index + 1,
+                            name: studentsList[index].name,
+                            present: studentsList[index].present,
+                            totalClasses: studentsList[index].totalClasses,
+                            attendancePercentage:
+                                studentsList[index].percentage.toInt(),
+                            usn: studentsList[index].usn,
+                            courseId: courseId,
+                          )),
                 ),
-              ),
+                Container(
+                  width: double.infinity,
+                  color: kOrangeColor.withOpacity(0.1),
+                  child: SafeArea(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, AttendanceMarkingScreen.routeName,
+                          arguments: [studentsList, courseId, numberOfClasses]);
+                    },
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(top: 18),
+                      child: Text(
+                        "Mark Today\'s Attendance",
+                        style: TextStyle(
+                            color: kOrangeColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )),
+                  )),
+                )
+              ],
             ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: studentsList.length, itemBuilder: (context, index) => StudentTile(rollNo:index+1,name: studentsList[index].name,present: studentsList[index].present,totalClasses: studentsList[index].totalClasses,attendancePercentage: studentsList[index].percentage.toInt(),usn: studentsList[index].usn,courseId: courseId,)),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

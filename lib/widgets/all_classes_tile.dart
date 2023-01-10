@@ -68,7 +68,7 @@ class ClassTile extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pushNamed(
                                 StudentsListScreen.routeName,
-                                arguments: [section, courseId]);
+                                arguments: [section, courseId,subjectName]);
                             //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>StudentsListScreen(section:section ,courseId: courseId,)));
                           },
                         ),
