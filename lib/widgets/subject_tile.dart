@@ -1,5 +1,9 @@
+import 'package:attendance_manager/providers/cie.dart';
+import 'package:attendance_manager/providers/cie_student.dart';
 import 'package:attendance_manager/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../screens/student_screens/student_calendar_screen.dart';
@@ -16,6 +20,17 @@ class SubjectTile extends StatefulWidget {
 
 class _SubjectTileState extends State<SubjectTile> {
   bool _isExpanded = false;
+  @override
+  void getData() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    Provider.of<CieStudentProvider>(context, listen: false).fetchAndSetCieStudentData(
+        sp.getString('usn').toString());
+  }
+
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
