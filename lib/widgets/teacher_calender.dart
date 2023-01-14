@@ -1,4 +1,5 @@
 import 'package:attendance_manager/providers/attendance_data.dart';
+import 'package:attendance_manager/providers/student.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +66,9 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                         setState(() {
                           print("Present");
                           Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, true);
+                          Provider.of<StudentProvider>(context,listen: false).markPresent(widget.usn);
                           //subject.addPresentEvent(date);
+
                         });
                         Navigator.of(context).pop();
                       },

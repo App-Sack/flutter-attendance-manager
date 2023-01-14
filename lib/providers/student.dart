@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-class Student {
+class Student with ChangeNotifier{
   final String name;
   final String usn;
-  final double percentage;
-  final int present;
-  final int totalClasses;
+  late double percentage;
+  late int present;
+  late int totalClasses;
 
   Student(
       {required this.name,
@@ -16,6 +16,15 @@ class Student {
       required this.percentage,
       required this.present,
       required this.totalClasses});
+
+  void markPresent(String usn){
+    present=present+1;
+    totalClasses=totalClasses+1;
+    percentage=totalClasses!=0?(present/totalClasses)*100:10;
+    print("notifiedddd");
+    notifyListeners();
+  }
+
 }
 
 class StudentProvider with ChangeNotifier {
@@ -40,6 +49,29 @@ class StudentProvider with ChangeNotifier {
               double.parse(element['attendance_percentage'].toString()));
       students.add(newStudent);
     }
+    print(students.length);
+    notifyListeners();
+  }
+
+  void markPresent(String usn){
+    int index=students.indexWhere((element) => element.usn==usn);
+    students[index].totalClasses=students[index].totalClasses+1;
+    students[index].present=students[index].present+1;
+    students[index].percentage=(students[index].present/students[index].totalClasses)*100;
+    //students.forEach((element) {print(element.usn);});
+    // students.forEach((element) {
+    //   print(element);
+    //   if(element.usn==usn){
+    //   print("typo");
+    //   element.totalClasses=element.totalClasses+1;
+    //   element.present=element.present+1;
+    //   element.percentage=(element.present/element.totalClasses)*100;
+    //   print(element.totalClasses);
+    //   notifyListeners();
+    // }});
+    print(students[index].totalClasses);
+    print("notifiedddd");
+    notifyListeners();
   }
 
   List<Student> get studentsList {

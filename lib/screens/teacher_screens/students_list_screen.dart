@@ -17,29 +17,32 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
   late String courseId;
   int numberOfClasses = 1;
   String subjectName = "Subject Name";
+  String section="";
   List<Student> studentsList = [];
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      List data = ModalRoute.of(context)!.settings.arguments as List;
-      courseId = data[1];
-      subjectName = data[2];
-      Provider.of<StudentProvider>(context, listen: false)
-          .fetchAndSetStudents(data[0], courseId)
-          .then((value) {
-        studentsList =
-            Provider.of<StudentProvider>(context, listen: false).studentsList;
-        setState(() {
-          subjectName;
-          studentsList;
-        });
-      });
+
+      // Provider.of<StudentProvider>(context, listen: false)
+      //     .fetchAndSetStudents(data[0], courseId)
+      //     .then((value) {
+      //   studentsList =
+      //       Provider.of<StudentProvider>(context, listen: false).studentsList;
+      //   setState(() {
+      //     subjectName;
+      //     studentsList;
+      //});
+      //});
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    List data = ModalRoute.of(context)!.settings.arguments as List;
+    courseId = data[1];
+    subjectName = data[2];
+    section=data[0];
     Future DailogBox() {
       return showDialog(
         context: context,
@@ -95,32 +98,35 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
         ),
       );
     }
+    Provider.of<StudentProvider>(context,listen: false).fetchAndSetStudents(section,courseId);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(subjectName),
         backgroundColor: kOrangeColor,
       ),
-      body: studentsList.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
+      body: Column(
               children: [
                 SizedBox(
                   height: 12,
                 ),
                 Expanded(
-                  child: ListView.builder(
-                      itemCount: studentsList.length,
-                      itemBuilder: (context, index) => StudentTile(
-                            rollNo: index + 1,
-                            name: studentsList[index].name,
-                            present: studentsList[index].present,
-                            totalClasses: studentsList[index].totalClasses,
-                            attendancePercentage:
-                                studentsList[index].percentage.toInt(),
-                            usn: studentsList[index].usn,
-                            courseId: courseId,
-                          )),
+                  child: Consumer<StudentProvider>(
+                    builder: (context,provider,child)=> ListView.builder(
+                        itemCount: provider.students.length,
+                        itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                          value: provider.students[index],
+                          child: StudentTile(
+                                rollNo: index + 1,
+                                name: provider.students[index].name,
+                                present: provider.students[index].present,
+                                totalClasses: provider.students[index].totalClasses,
+                                attendancePercentage: provider.students[index].percentage.toInt(),
+                                usn: provider.students[index].usn,
+                                courseId: courseId,
+                              ),
+                        )),
+                  ),
                 ),
                 Container(
                   width: double.infinity,
