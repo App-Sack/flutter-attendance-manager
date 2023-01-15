@@ -112,17 +112,12 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
                 ),
                 Expanded(
                   child: Consumer<StudentProvider>(
-                    builder: (context,provider,child)=> ListView.builder(
+                    builder: (context,provider,child)=>provider.students.isEmpty?Center(child: CircularProgressIndicator(),) :ListView.builder(
                         itemCount: provider.students.length,
                         itemBuilder: (context, index) => ChangeNotifierProvider.value(
                           value: provider.students[index],
                           child: StudentTile(
                                 rollNo: index + 1,
-                                name: provider.students[index].name,
-                                present: provider.students[index].present,
-                                totalClasses: provider.students[index].totalClasses,
-                                attendancePercentage: provider.students[index].percentage.toInt(),
-                                usn: provider.students[index].usn,
                                 courseId: courseId,
                               ),
                         )),

@@ -7,21 +7,11 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class StudentTile extends StatelessWidget {
   final int rollNo;
-  final String usn;
-  final String name;
-  final int attendancePercentage;
   final String courseId;
-  final int totalClasses;
-  final int present;
 
   StudentTile(
       {super.key,
-      required this.name,
-      required this.attendancePercentage,
-      required this.usn,
       required this.courseId,
-      required this.present,
-      required this.totalClasses,
       required this.rollNo});
   int requiredAttendance = 75;
   @override
@@ -33,12 +23,12 @@ class StudentTile extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, TeacherCalenderScreen.routeName,
                 arguments: [
-                  usn,
+                  student.usn,
                   courseId,
                   student.present,
                   student.totalClasses,
                   student.percentage.toInt(),
-                  name
+                  student.name
                 ]);
           },
           child: Container(
