@@ -58,19 +58,13 @@ class StudentProvider with ChangeNotifier {
     students[index].totalClasses=students[index].totalClasses+1;
     students[index].present=students[index].present+1;
     students[index].percentage=(students[index].present/students[index].totalClasses)*100;
-    //students.forEach((element) {print(element.usn);});
-    // students.forEach((element) {
-    //   print(element);
-    //   if(element.usn==usn){
-    //   print("typo");
-    //   element.totalClasses=element.totalClasses+1;
-    //   element.present=element.present+1;
-    //   element.percentage=(element.present/element.totalClasses)*100;
-    //   print(element.totalClasses);
-    //   notifyListeners();
-    // }});
-    print(students[index].totalClasses);
-    print("notifiedddd");
+    notifyListeners();
+  }
+
+  void markAbsent(String usn){
+    int index=students.indexWhere((element) => element.usn==usn);
+    students[index].totalClasses=students[index].totalClasses+1;
+    students[index].percentage=(students[index].present/students[index].totalClasses)*100;
     notifyListeners();
   }
 

@@ -75,6 +75,5 @@ class AttendanceDataProvider with ChangeNotifier {
           HttpHeaders.acceptHeader: 'application/json',
           HttpHeaders.authorizationHeader: 'Token $token',
         });
-    print(response.body);
   }
 }

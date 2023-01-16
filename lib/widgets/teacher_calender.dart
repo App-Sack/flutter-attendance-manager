@@ -64,7 +64,6 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          print("Present");
                           Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, true);
                           Provider.of<StudentProvider>(context,listen: false).markPresent(widget.usn);
                           //subject.addPresentEvent(date);
@@ -84,8 +83,8 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        print("absent");
                         Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, false);
+                        Provider.of<StudentProvider>(context,listen: false).markAbsent(widget.usn);
                         //subject.addAbsentEvent(date);
                       });
                       Navigator.of(context).pop();
