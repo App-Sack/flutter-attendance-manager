@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:attendance_manager/providers/attendance_data.dart';
 import 'package:attendance_manager/providers/cie.dart';
 import 'package:attendance_manager/providers/cie_student.dart';
@@ -20,6 +22,7 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider.value(value: TeacherProvider()),
     ChangeNotifierProvider.value(value: StudentProvider()),
@@ -70,9 +73,16 @@ class _MyAppState extends State<MyApp> {
         AllClassesScreen.routeName: (ctx) => AllClassesScreen(),
         StudentsListScreen.routeName: (ctx) => StudentsListScreen(),
         AttendanceMarkingScreen.routeName: (ctx) => AttendanceMarkingScreen(),
-        TeacherCalenderScreen.routeName: (ctx) => TeacherCalenderScreen(),
+        //TeacherCalenderScreen.routeName: (ctx) => TeacherCalenderScreen(),
         CieScreen.routeName: (ctx) => CieScreen()
       },
     );
+  }
+}
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }

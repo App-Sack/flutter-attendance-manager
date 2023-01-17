@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:attendance_manager/providers/attendance_data.dart';
+import 'package:attendance_manager/providers/student.dart';
 import 'package:attendance_manager/widgets/teacher_calender.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,23 +9,21 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 
 class TeacherCalenderScreen extends StatefulWidget {
-  static const routeName = '/teacher-calendar-screen';
-  const TeacherCalenderScreen({Key? key}) : super(key: key);
+  final String courseId;
+  final String usn;
+  final String studentName;
+  TeacherCalenderScreen({required this.courseId,required this.usn,required this.studentName});
 
   @override
   State<TeacherCalenderScreen> createState() => _TeacherCalenderScreenState();
 }
 
 class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
-  String name = 'Student name';
   List attendanceRecords = [];
-  int percentage = 0;
-  int present = 0;
-  int totalClasses = 0;
-  String usn='';
-  String courseId='';
+
   //TODO:Fetch required attendance from the server
   int requiredAttendance = 75;
+
 
   // void getAttendanceData(String usn, String courseId) async {
   //   var url = Uri.parse(
@@ -40,9 +39,9 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
   void initState() {
     Future.delayed(Duration.zero, () {
       //TODO:Get arguments as map
-      List args = ModalRoute.of(context)!.settings.arguments as List;
+      //List args = ModalRoute.of(context)!.settings.arguments as List;
       Provider.of<AttendanceDataProvider>(context, listen: false)
-          .fetchAndSetAttendanceData(args[0], args[1])
+          .fetchAndSetAttendanceData(widget.usn, widget.courseId)
           .then((value) {
         attendanceRecords =
             Provider.of<AttendanceDataProvider>(context, listen: false)
@@ -51,12 +50,6 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
           attendanceRecords;
         });
       });
-      usn=args[0];
-      courseId=args[1];
-      present = args[2];
-      totalClasses = args[3];
-      percentage = args[4];
-      name = args[5];
     });
     super.initState();
   }
@@ -65,11 +58,9 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(widget.studentName),
       ),
-      body: name == 'Student name'
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
+      body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
@@ -89,61 +80,63 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
                           flex: 4,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircularStepProgressIndicator(
-                                  totalSteps: 10,
-                                  currentStep: (percentage / 10).toInt(),
-                                  stepSize: 5,
-                                  selectedColor: (percentage / 10) >
-                                          requiredAttendance / 10
-                                      ? Colors.lightGreenAccent.shade200
-                                      : Colors.redAccent.shade200,
-                                  unselectedColor: Colors.grey[200],
-                                  padding: 0,
-                                  width:
-                                      MediaQuery.of(context).size.height * 0.16,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.16,
-                                  selectedStepSize: 9,
-                                  roundedCap: (_, __) => true,
-                                  child: Center(
-                                    child: Text(
-                                      "${(percentage).toString()}%",
-                                      style: const TextStyle(
-                                          fontSize: 30, color: Colors.black38),
+                            child: Consumer<Student>(
+                              builder: (context,student,child)=> Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularStepProgressIndicator(
+                                    totalSteps: 10,
+                                    currentStep: (student.percentage / 10).toInt(),
+                                    stepSize: 5,
+                                    selectedColor: (student.percentage / 10) >
+                                            requiredAttendance / 10
+                                        ? Colors.lightGreenAccent.shade200
+                                        : Colors.redAccent.shade200,
+                                    unselectedColor: Colors.grey[200],
+                                    padding: 0,
+                                    width:
+                                        MediaQuery.of(context).size.height * 0.16,
+                                    height:
+                                        MediaQuery.of(context).size.height * 0.16,
+                                    selectedStepSize: 9,
+                                    roundedCap: (_, __) => true,
+                                    child: Center(
+                                      child: Text(
+                                        "${(student.percentage.toInt()).toString()}%",
+                                        style: const TextStyle(
+                                            fontSize: 30, color: Colors.black38),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Present:$present",
-                                      //"Present: ${subject.present}",
-                                      style: TextStyle(
-                                          fontSize: 26, color: Colors.black45),
-                                    ),
-                                    Text(
-                                      "Absent:${totalClasses - present}",
-                                      //"Absent: ${subject.absent}",
-                                      style: TextStyle(
-                                          fontSize: 25, color: Colors.black45),
-                                    ),
-                                    Text(
-                                      "Total:$totalClasses",
-                                      //"Total: ${subject.absent + subject.present}",
-                                      style: TextStyle(
-                                          fontSize: 25, color: Colors.black45),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Present:${student.present}",
+                                        //"Present: ${subject.present}",
+                                        style: TextStyle(
+                                            fontSize: 26, color: Colors.black45),
+                                      ),
+                                      Text(
+                                        "Absent:${student.totalClasses - student.present}",
+                                        //"Absent: ${subject.absent}",
+                                        style: TextStyle(
+                                            fontSize: 25, color: Colors.black45),
+                                      ),
+                                      Text(
+                                        "Total:${student.totalClasses}",
+                                        //"Total: ${subject.absent + subject.present}",
+                                        style: TextStyle(
+                                            fontSize: 25, color: Colors.black45),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -154,14 +147,15 @@ class _TeacherCalenderScreenState extends State<TeacherCalenderScreen> {
                         //       subject.present, subject.absent, requiredAttendance),
                         // ),
                       ],
-                    )),
+                    ),
+                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   child: TeacherCalendar(
                     attendanceData: attendanceRecords,
-                    usn: usn,
-                    courseId: courseId,
+                    usn: widget.usn,
+                    courseId: widget.courseId,
                   ),
                 ),
               ],

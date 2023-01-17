@@ -21,15 +21,16 @@ class StudentTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, TeacherCalenderScreen.routeName,
-                arguments: [
-                  student.usn,
-                  courseId,
-                  student.present,
-                  student.totalClasses,
-                  student.percentage.toInt(),
-                  student.name
-                ]);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangeNotifierProvider.value(value: student,builder: (context,child)=>TeacherCalenderScreen(usn: student.usn,courseId: courseId,studentName: student.name,),)));
+            // Navigator.pushNamed(context, TeacherCalenderScreen.routeName,
+            //     arguments: [
+            //       student.usn,
+            //       courseId,
+            //       student.present,
+            //       student.totalClasses,
+            //       student.percentage.toInt(),
+            //       student.name
+            //     ]);
           },
           child: Container(
             width: double.infinity,
