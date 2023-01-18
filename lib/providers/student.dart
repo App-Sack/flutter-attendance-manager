@@ -21,10 +21,13 @@ class Student with ChangeNotifier{
     present=present+1;
     totalClasses=totalClasses+1;
     percentage=totalClasses!=0?(present/totalClasses)*100:10;
-    print("notifiedddd");
     notifyListeners();
   }
-
+  void markAbsent(String usn){
+    totalClasses=totalClasses+1;
+    percentage=totalClasses!=0?(present/totalClasses)*100:10;
+    notifyListeners();
+  }
 }
 
 class StudentProvider with ChangeNotifier {
@@ -49,22 +52,6 @@ class StudentProvider with ChangeNotifier {
               double.parse(element['attendance_percentage'].toString()));
       students.add(newStudent);
     }
-    print(students.length);
-    notifyListeners();
-  }
-
-  void markPresent(String usn){
-    int index=students.indexWhere((element) => element.usn==usn);
-    students[index].totalClasses=students[index].totalClasses+1;
-    students[index].present=students[index].present+1;
-    students[index].percentage=(students[index].present/students[index].totalClasses)*100;
-    notifyListeners();
-  }
-
-  void markAbsent(String usn){
-    int index=students.indexWhere((element) => element.usn==usn);
-    students[index].totalClasses=students[index].totalClasses+1;
-    students[index].percentage=(students[index].present/students[index].totalClasses)*100;
     notifyListeners();
   }
 

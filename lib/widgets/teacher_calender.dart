@@ -9,7 +9,11 @@ class TeacherCalendar extends StatefulWidget {
   final List<dynamic> attendanceData;
   final String usn;
   final String courseId;
-  const TeacherCalendar({super.key, required this.attendanceData,required this.courseId,required this.usn});
+  const TeacherCalendar(
+      {super.key,
+      required this.attendanceData,
+      required this.courseId,
+      required this.usn});
 
   @override
   State<TeacherCalendar> createState() => _TeacherCalendarState();
@@ -64,10 +68,12 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, true);
-                          Provider.of<StudentProvider>(context,listen: false).markPresent(widget.usn);
-                          //subject.addPresentEvent(date);
-
+                          Provider.of<AttendanceDataProvider>(context,
+                                  listen: false)
+                              .markAttendanceForSingleDay(
+                                  date, widget.usn, widget.courseId, true);
+                          Provider.of<Student>(context, listen: false)
+                              .markPresent(widget.usn);
                         });
                         Navigator.of(context).pop();
                       },
@@ -83,8 +89,12 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        Provider.of<AttendanceDataProvider>(context,listen: false).markAttendanceForSingleDay(date, widget.usn, widget.courseId, false);
-                        Provider.of<StudentProvider>(context,listen: false).markAbsent(widget.usn);
+                        Provider.of<AttendanceDataProvider>(context,
+                                listen: false)
+                            .markAttendanceForSingleDay(
+                                date, widget.usn, widget.courseId, false);
+                        Provider.of<Student>(context, listen: false)
+                            .markAbsent(widget.usn);
                         //subject.addAbsentEvent(date);
                       });
                       Navigator.of(context).pop();
@@ -100,11 +110,10 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        Provider.of<AttendanceDataProvider>(context,listen: false).clearAttendance(date,widget.usn,widget.courseId);
-                      }
-                          //subject.clearAllEventsOnDay(date);
-
-                          );
+                        Provider.of<AttendanceDataProvider>(context,
+                                listen: false)
+                            .clearAttendance(date, widget.usn, widget.courseId);
+                      });
                       Navigator.of(context).pop();
                     },
                     child: Text(
