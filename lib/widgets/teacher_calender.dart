@@ -110,9 +110,10 @@ class _TeacherCalendarState extends State<TeacherCalendar> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        Provider.of<AttendanceDataProvider>(context,
+                        List<int> res=Provider.of<AttendanceDataProvider>(context,
                                 listen: false)
                             .clearAttendance(date, widget.usn, widget.courseId);
+                        Provider.of<Student>(context,listen: false).updateStudentAttendance(res[0], res[1]);
                       });
                       Navigator.of(context).pop();
                     },

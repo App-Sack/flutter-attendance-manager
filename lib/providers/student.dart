@@ -28,6 +28,12 @@ class Student with ChangeNotifier{
     percentage=totalClasses!=0?(present/totalClasses)*100:10;
     notifyListeners();
   }
+
+  void updateStudentAttendance(int changePresent,int absent){
+        present=present-changePresent;
+        totalClasses=totalClasses-changePresent-absent;
+        notifyListeners();
+  }
 }
 
 class StudentProvider with ChangeNotifier {
@@ -54,6 +60,8 @@ class StudentProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
 
   List<Student> get studentsList {
     return [...students];

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:attendance_manager/providers/student.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -38,10 +39,18 @@ class AttendanceDataProvider with ChangeNotifier {
     return [..._attendanceData];
   }
 
-  void clearAttendance(String deleteDate,String usn,String courseId){
+  List<int> clearAttendance(String deleteDate,String usn,String courseId){
+    int present=0;
+    int absent=0;
     _attendanceData.forEach((element) async {
       String parseDate=DateFormat('yyyy-MM-dd').format(DateTime.parse(element.date));
       if(parseDate==deleteDate){
+        if(element.isPresent){
+          present++;
+        }
+        if(!element.isPresent){
+          absent++;
+        }
         SharedPreferences sp=await SharedPreferences.getInstance();
         String? token=sp.getString('token');
           var url=Uri.parse("https://sjce12345.pythonanywhere.com/api/teacher/reset-attendance-on-date");
@@ -60,6 +69,7 @@ class AttendanceDataProvider with ChangeNotifier {
         }
       }
     });
+    return [present,absent];
   }
 
   void markAttendanceForSingleDay(String date,String usn,String courseId,bool attendanceStatus) async{
