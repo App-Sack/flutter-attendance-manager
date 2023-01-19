@@ -32,6 +32,7 @@ class Student with ChangeNotifier{
   void updateStudentAttendance(int changePresent,int absent){
         present=present-changePresent;
         totalClasses=totalClasses-changePresent-absent;
+        percentage=totalClasses!=0?(present/totalClasses)*100:10;
         notifyListeners();
   }
 }
