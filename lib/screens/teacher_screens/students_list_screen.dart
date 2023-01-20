@@ -128,11 +128,7 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
                   color: kOrangeColor.withOpacity(0.1),
                   child: SafeArea(
                       child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, AttendanceMarkingScreen.routeName,
-                          arguments: [studentsList, courseId, numberOfClasses]);
-                    },
+                    onTap:DailogBox,
                     child: Center(
                         child: Padding(
                       padding: const EdgeInsets.only(top: 18),
