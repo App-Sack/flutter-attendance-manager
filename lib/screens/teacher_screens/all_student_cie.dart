@@ -14,34 +14,11 @@ class CieScreen extends StatefulWidget {
 }
 
 class _CieScreenState extends State<CieScreen> {
-  List<CIE> cieList = [];
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    cieList = [];
-    Future.delayed(Duration.zero, () {
-      List args = ModalRoute.of(context)!.settings.arguments as List;
-      Provider.of<CieProvider>(context, listen: false)
-          .fetchAndSetCieData(args[0], args[1])
-          .then((value) {
-        cieList = Provider.of<CieProvider>(context, listen: false).CieData;
-        setState(() {
-          cieList;
-        });
-      });
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    int numsub = 0;
+    List args = ModalRoute.of(context)!.settings.arguments as List;
+    Provider.of<CieProvider>(context, listen: false)
+        .fetchAndSetCieData(args[0], args[1]);
     return Scaffold(
       appBar: AppBar(
         title: const Text("CIE"),
@@ -50,42 +27,35 @@ class _CieScreenState extends State<CieScreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
         ],
       ),
-      body: cieList.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                  itemCount: cieList.length,
-                  itemBuilder: ((context, index) {
-                    return CieTile(
-                        name: cieList[index].student_name,
-                        usn: cieList[index].usn,
-                        e1: cieList[index].e1 == null
-                            ? "-"
-                            : cieList[index].e1.toString(),
-                        e2: cieList[index].e2 == null
-                            ? "-"
-                            : cieList[index].e2.toString(),
-                        e3: cieList[index].e3 == null
-                            ? "-"
-                            : cieList[index].e3.toString(),
-                        e4: cieList[index].e4 == null
-                            ? "-"
-                            : cieList[index].e4.toString(),
-                        e5: cieList[index].e5 == null
-                            ? "-"
-                            : cieList[index].e5.toString(),
-                        avg: (((cieList[index].e1 ?? 0) +
-                                (cieList[index].e2 ?? 0) +
-                                (cieList[index].e3 ?? 0) +
-                                (cieList[index].e4 ?? 0) +
-                                (cieList[index].e5 ?? 0)) ~/
-                            2));
-                  }))),
+      body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Consumer<CieProvider>(
+            builder: (context, cieObj, child) => cieObj.cieData.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: cieObj.cieData.length,
+                    itemBuilder: ((context, index) {
+                      return ChangeNotifierProvider.value(
+                        value: cieObj.cieData[index],
+                        child: Consumer<CIE>(
+                          builder: (context, cie, child) => CieTile(
+                              name: cie.student_name,
+                              usn: cie.usn,
+                              e1: cie.e1 == null ? "-" : cie.e1.toString(),
+                              e2: cie.e2 == null ? "-" : cie.e2.toString(),
+                              e3: cie.e3 == null ? "-" : cie.e3.toString(),
+                              e4: cie.e4 == null ? "-" : cie.e4.toString(),
+                              e5: cie.e5 == null ? "-" : cie.e5.toString(),
+                              avg: (((cie.e1 ?? 0) +
+                                      (cie.e2 ?? 0) +
+                                      (cie.e3 ?? 0) +
+                                      (cie.e4 ?? 0) +
+                                      (cie.e5 ?? 0)) ~/
+                                  2)),
+                        ),
+                      );
+                    })),
+          )),
     );
   }
 }
-
-
-
-

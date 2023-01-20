@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CIE {
+class CIE with ChangeNotifier{
   final String course_id;
   final String usn;
   final String student_name;
@@ -35,7 +35,6 @@ class CieProvider with ChangeNotifier {
         "https://sjce12345.pythonanywhere.com/api/cie/get-students-in-section-cie/$section/$courseId/");
     var data = await http.get(url);
     final extractedData = json.decode(data.body);
-    print(extractedData);
     String course_id = extractedData["course_id"];
     final studentsData = extractedData["students_data"];
     for (var student in studentsData) {
@@ -50,11 +49,12 @@ class CieProvider with ChangeNotifier {
           e5: student["e5"]);
       cieData.add(newCie);
     }
+    notifyListeners();
   }
 
-  List<CIE> get CieData {
-    return [...cieData];
-  }
+  // List<CIE> get CieData {
+  //   return [..._cieData];
+  // }
 
   Future<String> updateCie(Map<String, dynamic> dataToSend) async {
     String message = "";
